@@ -1,0 +1,1 @@
+{"version":3,"sources":["file:///Users/feiwang/AITown/AITownCocos/assets/src/game/config/ModuleID.ts"],"names":["ModuleID"],"mappings":";;;;;;;;;;;;;;0BAAaA,Q,GAAW;AACpB,gBAAS,MADW;AAEpB,iBAAQ;AAFY,O","sourcesContent":["export const ModuleID = {\n    \"TOWN\" : \"town\",\n    \"JISHI\":\"jishi\",\n}"]}

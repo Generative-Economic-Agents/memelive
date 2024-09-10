@@ -1,0 +1,1 @@
+{"version":3,"sources":["file:///Users/feiwang/cutepet/node_modules/aws-sdk/apis/iotevents-2018-07-27.paginators.json"],"names":["pagination"],"mappings":";;;;;;yBAAe;AACbA,QAAAA,UAAU,EAAE;AADC,O","sourcesContent":["export default {\n  pagination: {}\n}"]}

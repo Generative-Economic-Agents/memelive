@@ -1,0 +1,1 @@
+{"version":3,"sources":["file:///Users/feiwang/cutepet/node_modules/aws-sdk/apis/ec2-instance-connect-2018-04-02.paginators.json"],"names":["pagination"],"mappings":";;;;;;yBAAe;AACbA,QAAAA,UAAU,EAAE;AADC,O","sourcesContent":["export default {\n  pagination: {}\n}"]}

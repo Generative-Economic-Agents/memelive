@@ -1,0 +1,86 @@
+System.register([], function (_export, _context) {
+  "use strict";
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", {
+        pagination: {
+          GetChatControlsConfiguration: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'topicConfigurations'
+          },
+          ListApplications: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'applications'
+          },
+          ListConversations: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'conversations'
+          },
+          ListDataSourceSyncJobs: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'history'
+          },
+          ListDataSources: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'dataSources'
+          },
+          ListDocuments: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'documentDetailList'
+          },
+          ListGroups: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'items'
+          },
+          ListIndices: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'indices'
+          },
+          ListMessages: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'messages'
+          },
+          ListPlugins: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'plugins'
+          },
+          ListRetrievers: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'retrievers'
+          },
+          ListWebExperiences: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'webExperiences'
+          }
+        }
+      });
+    }
+  };
+});
+//# sourceMappingURL=0cd9f4ce8c7b36d71c6b10d17fda60b7c8373eae.js.map

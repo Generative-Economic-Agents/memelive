@@ -1,0 +1,56 @@
+System.register([], function (_export, _context) {
+  "use strict";
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", {
+        pagination: {
+          ListClientDevicesAssociatedWithCoreDevice: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'associatedClientDevices'
+          },
+          ListComponentVersions: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'componentVersions'
+          },
+          ListComponents: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'components'
+          },
+          ListCoreDevices: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'coreDevices'
+          },
+          ListDeployments: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'deployments'
+          },
+          ListEffectiveDeployments: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'effectiveDeployments'
+          },
+          ListInstalledComponents: {
+            input_token: 'nextToken',
+            output_token: 'nextToken',
+            limit_key: 'maxResults',
+            result_key: 'installedComponents'
+          }
+        }
+      });
+    }
+  };
+});
+//# sourceMappingURL=7d5b903f0c22422efd84165c6e584a8ebb38b9a2.js.map
