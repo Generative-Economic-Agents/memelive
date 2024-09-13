@@ -107,6 +107,11 @@ public class MessageSender {
         while (entries.hasNext()) {
             Map.Entry<String, INode> entry = entries.next();
             INode node = entry.getValue();
+            //过滤python服务
+            if(node.getType() == NodeConstant.kPythonService){
+                continue;
+            }
+
             int command = (node.getType() == NodeConstant.kGatewayService) ? ProtocolCommon.MSG_RESPONSE : msg.getCommand();
             byte[] header = makeHeader(command, msg.getCommand(), msg.getCode(), myNode.getNodeId(), node.getNodeID(), true);
 
