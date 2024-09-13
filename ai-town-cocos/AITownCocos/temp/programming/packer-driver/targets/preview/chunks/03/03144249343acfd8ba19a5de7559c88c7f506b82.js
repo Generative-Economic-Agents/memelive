@@ -58,6 +58,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.catRootNode = new Node();
           this.testTools = false;
           this.currentNpcIndex = 0;
+          this.curViewNpcY = void 0;
+          this.curViewNpcX = void 0;
         }
 
         static get instance() {

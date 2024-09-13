@@ -5,7 +5,7 @@ import {  NPCPartDisplay } from '../StaticUtils/NPCConfig';
 import { network } from '../model/RequestData';
 import { socket } from '../game/App';
 import { AStar } from './AStar';
-import { hight } from '../town/TownView';
+import { hight, wight } from '../town/TownView';
 import { GlobalConfig } from '../game/config/GlobalConfig';
 const { ccclass, property } = _decorator;
 export const distance = -256 //每一组人物组成部分的间隔
@@ -54,6 +54,15 @@ export class NPCControl extends Component {
     @property(Node)
     public canvas!: Node;
 
+    @property(Node)
+    public mark!: Node;
+
+    @property(Node)
+    public tileMap!: Node;
+
+    @property(Node)
+    public front!: Node;
+
     keyDown: boolean = false            //是否处于按下状态
     currentDirectKey!: KeyCode          //当前按下的按键是那个
     stepIndex: number = 0
@@ -91,6 +100,23 @@ export class NPCControl extends Component {
     }
 
     update(deltaTime: number) {
+        if(this.npcIndex === GlobalConfig.instance.currentNpcIndex){
+            GlobalConfig.instance.curViewNpcX = this.npc.getPosition().x
+            GlobalConfig.instance.curViewNpcX = this.npc.getPosition().y
+            if(this.canvas.getScale().x === 2){
+                const gameView = view.getVisibleSize();
+                this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2, this.tileMap.getPosition().y - (hight - this.npc.getPosition().y))
+                this.front.setPosition(this.camera.node.getPosition().x * 2, this.camera.node.getPosition().y * 2)
+            }
+
+            //console.log('======', this.camera.node.getPosition())
+
+        }
+        if(GlobalConfig.instance.currentNpcIndex === this.npcIndex){
+            this.mark.active = true
+        }else{
+            this.mark.active = false
+        }
         this.frameAdd = this.frameAdd + deltaTime
         if(this.keyDown && this.frameAdd > frameSpeed){
             this.setMoveSprite(this.currentDirectKey)
@@ -145,11 +171,20 @@ export class NPCControl extends Component {
             const originPos = this.npc.getPosition()
             //this.npc.setPosition(originPos.x + NPCDirect[key].offsetX, originPos.y + NPCDirect[key].offsetY)
             this.npc.setPosition(pos.x, pos.y)
-            console.log('=========',this.camera.node.getPosition())
             if(this.npcIndex === GlobalConfig.instance.currentNpcIndex && this.canvas.getScale().x === 2){
+                //this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2,  ((this.npc.getPosition().y - hight)))
+                //this.camera.node.setPosition(new Vec3(512, 736, 0))
+                this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2, this.tileMap.getPosition().y - (hight - this.npc.getPosition().y))
+                this.front.setPosition(this.camera.node.getPosition())
+                // if((this.npc.getPosition().x > view.getVisibleSize().x && this.npc.getPosition().x < wight - view.getVisibleSize().x)){
+                //     this.camera.node.setPosition(this.npc.getPosition().x, this.camera.node.getPosition().y)
+                // }
+                // if((this.npc.getPosition().y > view.getVisibleSize().y && this.npc.getPosition().y < hight - view.getVisibleSize().y)){
+                //     this.camera.node.setPosition(this.camera.node.getPosition().x, this.npc.getPosition().y)
+                // }
 
             }
-            this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2,  - ((hight - this.npc.getPosition().y) - gameView.height + 100))
+
             // if(this.camera){
             //     if((this.npc.getPosition().x > view.getVisibleSize().x && this.npc.getPosition().x < hight - view.getVisibleSize().x)){
             //         this.camera.node.setPosition(this.npc.getPosition().x, this.camera.node.getPosition().y)

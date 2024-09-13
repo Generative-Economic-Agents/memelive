@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "790af8f5-9d3a-4e2c-a68a-48b434dd5281",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "790af8f5-9d3a-4e2c-a68a-48b434dd5281@6c48a",
+      "displayName": "质押系统按钮激活",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "790af8f5-9d3a-4e2c-a68a-48b434dd5281",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "790af8f5-9d3a-4e2c-a68a-48b434dd5281@f9941",
+      "displayName": "质押系统按钮激活",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 0.5,
+        "trimX": 2,
+        "trimY": 1,
+        "width": 45,
+        "height": 48,
+        "rawWidth": 49,
+        "rawHeight": 51,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -22.5,
+            -24,
+            0,
+            22.5,
+            -24,
+            0,
+            -22.5,
+            24,
+            0,
+            22.5,
+            24,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            2,
+            50,
+            47,
+            50,
+            2,
+            2,
+            47,
+            2
+          ],
+          "nuv": [
+            0.04081632653061224,
+            0.0392156862745098,
+            0.9591836734693877,
+            0.0392156862745098,
+            0.04081632653061224,
+            0.9803921568627451,
+            0.9591836734693877,
+            0.9803921568627451
+          ],
+          "minPos": [
+            -22.5,
+            -24,
+            0
+          ],
+          "maxPos": [
+            22.5,
+            24,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "790af8f5-9d3a-4e2c-a68a-48b434dd5281@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "790af8f5-9d3a-4e2c-a68a-48b434dd5281@6c48a"
+  }
+}

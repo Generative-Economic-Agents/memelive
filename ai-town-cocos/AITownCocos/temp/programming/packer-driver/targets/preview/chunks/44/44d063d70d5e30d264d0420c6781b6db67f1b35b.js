@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "lodash", "__unresolved_7", "__unresolved_8"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, instantiate, KeyCode, Label, Node, TiledMap, TiledObjectGroup, tween, UITransform, Vec2, Vec3, view, modelMgr, observer, socket, EventType, network, WebUtils, BubbleImgUrl, EventNpcInfoMap, NpcEventType, NpcIndex, NPCPartDisplayInfo, ProductsItemUrl, NPCControl, _, PromiseUtils, GlobalConfig, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _crd, ccclass, property, sleepFramePosX, sleepFrameTime, bubbleTime, hight, PosAdapt, TownView;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, instantiate, KeyCode, Label, Node, TiledLayer, TiledMap, TiledObjectGroup, tween, UITransform, Vec2, Vec3, view, modelMgr, observer, socket, EventType, network, WebUtils, BubbleImgUrl, EventNpcInfoMap, NpcEventType, NpcIndex, NPCPartDisplayInfo, ProductsItemUrl, NPCControl, _, PromiseUtils, GlobalConfig, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _crd, ccclass, property, sleepFramePosX, sleepFrameTime, bubbleTime, hight, wight, PosAdapt, TownView;
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -102,6 +102,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       KeyCode = _cc.KeyCode;
       Label = _cc.Label;
       Node = _cc.Node;
+      TiledLayer = _cc.TiledLayer;
       TiledMap = _cc.TiledMap;
       TiledObjectGroup = _cc.TiledObjectGroup;
       tween = _cc.tween;
@@ -153,7 +154,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("bubbleTime", bubbleTime = 0.7);
 
-      _export("hight", hight = 6720); // 434, 820
+      _export("hight", hight = 6720);
+
+      _export("wight", wight = 640); // 434, 820
 
 
       PosAdapt = 1;
@@ -223,19 +226,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.sleepFrameAdd = 0;
           this.homeBedFrameIndex = 0;
           this.info_farmland1 = {
-            farmland: 'farmland1',
+            farmland: "farmland1",
             fieldNode: null
           };
           this.info_farmland2 = {
-            farmland: 'farmland2',
+            farmland: "farmland2",
             fieldNode: null
           };
           this.info_farmland3 = {
-            farmland: 'farmland3',
+            farmland: "farmland3",
             fieldNode: null
           };
           this.info_farmland4 = {
-            farmland: 'farmland4',
+            farmland: "farmland4",
             fieldNode: null
           };
           // farmland4 = [];
@@ -685,6 +688,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             head.active = true;
             bubble.active = true;
           }, bubbleTime);
+        }
+
+        sendEventOver(actionData, npc) {
+          var json = new (_crd && network === void 0 ? (_reportPossibleCrUseOfnetwork({
+            error: Error()
+          }), network) : network).NpcActionDone();
+          json.command = 10008;
+          json.type = 1;
+          json.data.bid = actionData.bid;
+          json.data.npcId = actionData.npcId;
+          json.data.objId = actionData.params.oid;
+          json.data.x = npc.getPosition().x;
+          json.data.y = hight - npc.getPosition().y;
+          json.data.isFinish = 1;
+          json.data.state = 1;
+          json.data.params = {
+            oid: actionData.params.oid,
+            itemId: actionData.params.itemId,
+            count: 1
+          };
+          (_crd && socket === void 0 ? (_reportPossibleCrUseOfsocket({
+            error: Error()
+          }), socket) : socket).sendWebSocketBinary(json);
         } //!npc做饭相关
 
 
@@ -957,7 +983,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000); //作物
 
               field.active = false;
-              field.getChildByName('farm_wheat_l').active = false;
+              field.getChildByName("farm_wheat_l").active = false;
               yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
                 error: Error()
               }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000); //出现作物收获图标
@@ -972,11 +998,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
                 error: Error()
               }), WebUtils) : WebUtils).getResouceImg(food.url, npc.getChildByName("bubble"));
-              npc.getChildByName('count').active = true;
+              npc.getChildByName("count").active = true;
               yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
                 error: Error()
               }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-              npc.getChildByName('count').active = false;
+              npc.getChildByName("count").active = false;
               npc.getChildByName("bubble").active = false;
 
               var startTile = _this5._getTilePos(new Vec2(npc.getPosition().x, npc.getPosition().y));
@@ -1014,18 +1040,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         butcherFeeding(npc, actionData) {
           return _asyncToGenerator(function* () {
-            var img = 'action/bubble/farm/wheat';
+            var img = "action/bubble/farm/wheat";
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
             }), WebUtils) : WebUtils).getResouceImg(img, npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "-" + actionData.params.count;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "-" + actionData.params.count;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
             }), WebUtils) : WebUtils).getResouceImg((_crd && BubbleImgUrl === void 0 ? (_reportPossibleCrUseOfBubbleImgUrl({
@@ -1044,7 +1070,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         butcherSkill(npc, actionData) {
           return _asyncToGenerator(function* () {
-            var img = 'action/bubble/farm/wheat';
+            var img = "action/bubble/farm/wheat";
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
             }), WebUtils) : WebUtils).getResouceImg((_crd && BubbleImgUrl === void 0 ? (_reportPossibleCrUseOfBubbleImgUrl({
@@ -1057,44 +1083,44 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
-            }), WebUtils) : WebUtils).getResouceImg('action/bubble/cook/hock', npc.getChildByName("bubble"), () => {
+            }), WebUtils) : WebUtils).getResouceImg("action/bubble/cook/hock", npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').active = true;
-            npc.getChildByName('count').getComponent(Label).string = "+" + actionData.params.count;
+            npc.getChildByName("count").active = true;
+            npc.getChildByName("count").getComponent(Label).string = "+" + actionData.params.count;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             npc.getChildByName("bubble").active = false;
           })();
         }
 
         breadMake(npc, actionData) {
           return _asyncToGenerator(function* () {
-            var img = 'action/bubble/farm/wheat';
+            var img = "action/bubble/farm/wheat";
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
-            }), WebUtils) : WebUtils).getResouceImg('action/bubble/farm/wheat', npc.getChildByName("bubble"), () => {
+            }), WebUtils) : WebUtils).getResouceImg("action/bubble/farm/wheat", npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "-" + actionData.params.items[0].count;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "-" + actionData.params.items[0].count;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
-            }), WebUtils) : WebUtils).getResouceImg('action/bubble/cook/bread', npc.getChildByName("bubble"), () => {
+            }), WebUtils) : WebUtils).getResouceImg("action/bubble/cook/bread", npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "+" + actionData.params.items[0].count;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "+" + actionData.params.items[0].count;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             npc.getChildByName("bubble").active = false;
           })();
         } //售货员
@@ -1114,23 +1140,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), WebUtils) : WebUtils).getResouceImg(item.url, npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "-" + actionData.params.count;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "-" + actionData.params.count;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
-            }), WebUtils) : WebUtils).getResouceImg('action/bubble/sale/money', npc.getChildByName("bubble"), () => {
+            }), WebUtils) : WebUtils).getResouceImg("action/bubble/sale/money", npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "+" + actionData.params.count * actionData.params.price;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "+" + actionData.params.count * actionData.params.price;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             npc.getChildByName("bubble").active = false;
           })();
         }
@@ -1146,33 +1172,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             });
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
-            }), WebUtils) : WebUtils).getResouceImg('action/bubble/sale/money', npc.getChildByName("bubble"), () => {
+            }), WebUtils) : WebUtils).getResouceImg("action/bubble/sale/money", npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "-" + actionData.params.count * actionData.params.price;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "-" + actionData.params.count * actionData.params.price;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             (_crd && WebUtils === void 0 ? (_reportPossibleCrUseOfWebUtils({
               error: Error()
             }), WebUtils) : WebUtils).getResouceImg(item.url, npc.getChildByName("bubble"), () => {
               npc.getChildByName("bubble").active = true;
             });
-            npc.getChildByName('count').getComponent(Label).string = "+" + actionData.params.count;
-            npc.getChildByName('count').active = true;
+            npc.getChildByName("count").getComponent(Label).string = "+" + actionData.params.count;
+            npc.getChildByName("count").active = true;
             yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
               error: Error()
             }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-            npc.getChildByName('count').active = false;
+            npc.getChildByName("count").active = false;
             npc.getChildByName("bubble").active = false;
           })();
         }
 
         speak(npc, actionData) {
-          npc.getChildByName('speakContent').getComponent(Label).string = actionData.params.content;
-          npc.getChildByName('speakContent').active = true;
+          npc.getChildByName("speakContentUp").getChildByName('Label').getComponent(Label).string = actionData.params.content;
+          npc.getChildByName("speakContentUp").active = true;
+          this.scheduleOnce(() => {
+            npc.getChildByName("speakContentUp").active = false;
+          }, 4);
         }
 
         stopFarming(npc, cb) {
@@ -1202,6 +1231,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               if (actionData.actionId === (_crd && NpcEventType === void 0 ? (_reportPossibleCrUseOfNpcEventType({
                 error: Error()
               }), NpcEventType) : NpcEventType).speak) {
+                var _this6$_layerFloor, _this6$_layerFloor2, _this6$_layerFloor3, _this6$_layerFloor4;
+
                 var toNpc = (_crd && _ === void 0 ? (_reportPossibleCrUseOf_({
                   error: Error()
                 }), _) : _).find(_this6.otherNPCarr, item => {
@@ -1212,10 +1243,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
                 var toPos = _this6._getTilePos(new Vec2(toNpc.getPosition().x, toNpc.getPosition().y));
 
+                var moveToPos;
+
+                if (!((_this6$_layerFloor = _this6._layerFloor) != null && (_this6$_layerFloor = _this6$_layerFloor.getComponent(TiledLayer)) != null && _this6$_layerFloor.getTileGIDAt(toPos.x + 1, toPos.y + 1))) {
+                  moveToPos = new Vec2(toPos.x + 1, toPos.y + 1);
+                }
+
+                if (!((_this6$_layerFloor2 = _this6._layerFloor) != null && (_this6$_layerFloor2 = _this6$_layerFloor2.getComponent(TiledLayer)) != null && _this6$_layerFloor2.getTileGIDAt(toPos.x - 1, toPos.y - 1))) {
+                  moveToPos = new Vec2(toPos.x - 1, toPos.y - 1);
+                }
+
+                if (!((_this6$_layerFloor3 = _this6._layerFloor) != null && (_this6$_layerFloor3 = _this6$_layerFloor3.getComponent(TiledLayer)) != null && _this6$_layerFloor3.getTileGIDAt(toPos.x + 1, toPos.y - 1))) {
+                  moveToPos = new Vec2(toPos.x + 1, toPos.y - 1);
+                }
+
+                if (!((_this6$_layerFloor4 = _this6._layerFloor) != null && (_this6$_layerFloor4 = _this6$_layerFloor4.getComponent(TiledLayer)) != null && _this6$_layerFloor4.getTileGIDAt(toPos.x - 1, toPos.y + 1))) {
+                  moveToPos = new Vec2(toPos.x - 1, toPos.y + 1);
+                }
+
                 eventPox = toNpc.getPosition();
-                finishTile = toPos;
+                finishTile = moveToPos;
               } else {
-                finishTile = _this6._getTilePos(new Vec2(eventPox.x, eventPox.y));
+                eventPox = new Vec2(_this6.tileObject.getObject(actionData.params.oid).x, _this6.tileObject.getObject(actionData.params.oid).y);
+                finishTile = _this6._getTilePos(new Vec2(_this6.tileObject.getObject(actionData.params.oid).x, _this6.tileObject.getObject(actionData.params.oid).y));
               }
             } catch (error) {}
 
@@ -1739,7 +1789,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               yield (_crd && PromiseUtils === void 0 ? (_reportPossibleCrUseOfPromiseUtils({
                 error: Error()
               }), PromiseUtils) : PromiseUtils).wait(bubbleTime * 2000);
-              field.getChildByName('farm_wheat_l').active = true;
+              field.getChildByName("farm_wheat_l").active = true;
             }
           })();
         }
@@ -1840,6 +1890,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), NPCControl) : NPCControl)._curTile = npcTile;
           item.setPosition(pos.x, pos.y);
+
+          if (NPC.id === 10002) {
+            (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+              error: Error()
+            }), GlobalConfig) : GlobalConfig).instance.curViewNpcX = pos.x;
+            (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+              error: Error()
+            }), GlobalConfig) : GlobalConfig).instance.curViewNpcY = pos.y;
+          }
+
           item.getChildByName("NPCinstantiate").getComponent(_crd && NPCControl === void 0 ? (_reportPossibleCrUseOfNPCControl({
             error: Error()
           }), NPCControl) : NPCControl).npcIndex = (_crd && NpcIndex === void 0 ? (_reportPossibleCrUseOfNpcIndex({
@@ -1953,8 +2013,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               // json.data.npcId = data.data.npcId
               // json.data.x = moveNPC.getPosition().x
               // json.data.y = hight - moveNPC.getPosition().y
-              // json.data.isFinish = 1 
-              // json.data.state = 1 
+              // json.data.isFinish = 1
+              // json.data.state = 1
               // socket.sendWebSocketBinary(json);
             }
           }).start();
@@ -2012,8 +2072,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           return _asyncToGenerator(function* () {
             (data == null ? void 0 : data.data) && data.data.forEach( /*#__PURE__*/_asyncToGenerator(function* (object) {
-              if (object.objId === 'farmland1' || object.objId === 'farmland2' || object.objId === 'farmland3' || object.objId === 'farmland4') {
-                if (object.state === '2') {
+              if (object.objId === "farmland1" || object.objId === "farmland2" || object.objId === "farmland3" || object.objId === "farmland4") {
+                if (object.state === "2") {
                   yield _this8.setFieldReady({
                     params: {
                       oid: object.objId,
@@ -2030,8 +2090,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _this9 = this;
 
           return _asyncToGenerator(function* () {
-            if (data.data.oid === 'farmland1' || data.data.oid === 'farmland3' || data.data.oid === 'farmland4') {
-              if (data.data.state === '2') {
+            if (data.data.oid === "farmland1" || data.data.oid === "farmland3" || data.data.oid === "farmland4") {
+              if (data.data.state === "2") {
                 yield _this9.setFieldReady({
                   params: {
                     oid: data.oid,

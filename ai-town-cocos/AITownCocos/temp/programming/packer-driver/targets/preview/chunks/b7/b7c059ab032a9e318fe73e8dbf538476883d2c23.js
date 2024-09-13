@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Camera, Component, KeyCode, Node, TiledLayer, TiledMap, tween, Vec2, Vec3, view, NPCDirect, AStar, hight, GlobalConfig, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _crd, ccclass, property, distance, spriteFrame, originRootX, frameSpeed, NPCControl;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Camera, Component, KeyCode, Node, TiledLayer, TiledMap, tween, Vec2, Vec3, view, NPCDirect, AStar, hight, GlobalConfig, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _crd, ccclass, property, distance, spriteFrame, originRootX, frameSpeed, NPCControl;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -78,7 +78,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("frameSpeed", frameSpeed = 0.05);
 
-      _export("NPCControl", NPCControl = (_dec = ccclass('NPCControl'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(Node), _dec5 = property(Node), _dec6 = property(Node), _dec7 = property(Node), _dec8 = property(Camera), _dec9 = property(Node), _dec10 = property(Node), _dec11 = property(Node), _dec(_class = (_class2 = class NPCControl extends Component {
+      _export("NPCControl", NPCControl = (_dec = ccclass('NPCControl'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(Node), _dec5 = property(Node), _dec6 = property(Node), _dec7 = property(Node), _dec8 = property(Camera), _dec9 = property(Node), _dec10 = property(Node), _dec11 = property(Node), _dec12 = property(Node), _dec13 = property(Node), _dec14 = property(Node), _dec(_class = (_class2 = class NPCControl extends Component {
         constructor() {
           super(...arguments);
 
@@ -101,6 +101,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "bubble", _descriptor9, this);
 
           _initializerDefineProperty(this, "canvas", _descriptor10, this);
+
+          _initializerDefineProperty(this, "mark", _descriptor11, this);
+
+          _initializerDefineProperty(this, "tileMap", _descriptor12, this);
+
+          _initializerDefineProperty(this, "front", _descriptor13, this);
 
           this.keyDown = false;
           //是否处于按下状态
@@ -140,6 +146,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         update(deltaTime) {
+          if (this.npcIndex === (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+            error: Error()
+          }), GlobalConfig) : GlobalConfig).instance.currentNpcIndex) {
+            (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+              error: Error()
+            }), GlobalConfig) : GlobalConfig).instance.curViewNpcX = this.npc.getPosition().x;
+            (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+              error: Error()
+            }), GlobalConfig) : GlobalConfig).instance.curViewNpcX = this.npc.getPosition().y;
+
+            if (this.canvas.getScale().x === 2) {
+              var gameView = view.getVisibleSize();
+              this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2, this.tileMap.getPosition().y - ((_crd && hight === void 0 ? (_reportPossibleCrUseOfhight({
+                error: Error()
+              }), hight) : hight) - this.npc.getPosition().y));
+              this.front.setPosition(this.camera.node.getPosition().x * 2, this.camera.node.getPosition().y * 2);
+            } //console.log('======', this.camera.node.getPosition())
+
+          }
+
+          if ((_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
+            error: Error()
+          }), GlobalConfig) : GlobalConfig).instance.currentNpcIndex === this.npcIndex) {
+            this.mark.active = true;
+          } else {
+            this.mark.active = false;
+          }
+
           this.frameAdd = this.frameAdd + deltaTime;
 
           if (this.keyDown && this.frameAdd > frameSpeed) {
@@ -218,15 +252,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var originPos = this.npc.getPosition(); //this.npc.setPosition(originPos.x + NPCDirect[key].offsetX, originPos.y + NPCDirect[key].offsetY)
 
             this.npc.setPosition(pos.x, pos.y);
-            console.log('=========', this.camera.node.getPosition());
 
             if (this.npcIndex === (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
               error: Error()
-            }), GlobalConfig) : GlobalConfig).instance.currentNpcIndex && this.canvas.getScale().x === 2) {}
-
-            this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2, -((_crd && hight === void 0 ? (_reportPossibleCrUseOfhight({
-              error: Error()
-            }), hight) : hight) - this.npc.getPosition().y - gameView.height + 100)); // if(this.camera){
+            }), GlobalConfig) : GlobalConfig).instance.currentNpcIndex && this.canvas.getScale().x === 2) {
+              //this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2,  ((this.npc.getPosition().y - hight)))
+              //this.camera.node.setPosition(new Vec3(512, 736, 0))
+              this.camera.node.setPosition(this.npc.getPosition().x - gameView.width / 2, this.tileMap.getPosition().y - ((_crd && hight === void 0 ? (_reportPossibleCrUseOfhight({
+                error: Error()
+              }), hight) : hight) - this.npc.getPosition().y));
+              this.front.setPosition(this.camera.node.getPosition()); // if((this.npc.getPosition().x > view.getVisibleSize().x && this.npc.getPosition().x < wight - view.getVisibleSize().x)){
+              //     this.camera.node.setPosition(this.npc.getPosition().x, this.camera.node.getPosition().y)
+              // }
+              // if((this.npc.getPosition().y > view.getVisibleSize().y && this.npc.getPosition().y < hight - view.getVisibleSize().y)){
+              //     this.camera.node.setPosition(this.camera.node.getPosition().x, this.npc.getPosition().y)
+              // }
+            } // if(this.camera){
             //     if((this.npc.getPosition().x > view.getVisibleSize().x && this.npc.getPosition().x < hight - view.getVisibleSize().x)){
             //         this.camera.node.setPosition(this.npc.getPosition().x, this.camera.node.getPosition().y)
             //     }
@@ -241,6 +282,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             //     json.type = 1;
             //     socket.sendWebSocketBinary(json);
             // }
+
           } catch (error) {}
         }
 
@@ -379,6 +421,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: null
       }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "canvas", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: null
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "mark", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: null
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "tileMap", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: null
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "front", [_dec14], {
         configurable: true,
         enumerable: true,
         writable: true,

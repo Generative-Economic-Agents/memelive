@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "38b31c6e-2375-4210-874b-6c81c0f8ecad",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "38b31c6e-2375-4210-874b-6c81c0f8ecad@6c48a",
+      "displayName": "钱包登录按钮",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "38b31c6e-2375-4210-874b-6c81c0f8ecad",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "38b31c6e-2375-4210-874b-6c81c0f8ecad@f9941",
+      "displayName": "钱包登录按钮",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0.5,
+        "offsetY": 0,
+        "trimX": 4,
+        "trimY": 3,
+        "width": 65,
+        "height": 64,
+        "rawWidth": 72,
+        "rawHeight": 70,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -32.5,
+            -32,
+            0,
+            32.5,
+            -32,
+            0,
+            -32.5,
+            32,
+            0,
+            32.5,
+            32,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            4,
+            67,
+            69,
+            67,
+            4,
+            3,
+            69,
+            3
+          ],
+          "nuv": [
+            0.05555555555555555,
+            0.04285714285714286,
+            0.9583333333333334,
+            0.04285714285714286,
+            0.05555555555555555,
+            0.9571428571428572,
+            0.9583333333333334,
+            0.9571428571428572
+          ],
+          "minPos": [
+            -32.5,
+            -32,
+            0
+          ],
+          "maxPos": [
+            32.5,
+            32,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "38b31c6e-2375-4210-874b-6c81c0f8ecad@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "38b31c6e-2375-4210-874b-6c81c0f8ecad@6c48a"
+  }
+}

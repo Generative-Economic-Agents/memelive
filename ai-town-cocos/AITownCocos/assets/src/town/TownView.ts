@@ -28,16 +28,19 @@ import {
   ProductsItemUrl,
 } from "../StaticUtils/NPCConfig";
 import { frameSpeed, NPCControl } from "../NPC/NPCControl";
-import _ from "lodash";
+import _, { lte } from "lodash";
 import { DataEvents, DataFarmEvent } from "../model/DataEvents";
 import { PromiseUtils } from "../StaticUtils/PromiseUtils";
 import { GlobalConfig } from "../game/config/GlobalConfig";
+import { NPCDirect } from "../StaticUtils/KeyCodeUtils";
 const { ccclass, property } = _decorator;
 export const sleepFramePosX = [40, -61];
 export const sleepFrameTime = 0.45;
 export const bubbleTime = 0.7;
 
-export const hight = 6720
+export const hight = 6720;
+
+export const wight = 640;
 // 434, 820
 const PosAdapt = 1;
 declare global {
@@ -60,7 +63,7 @@ declare global {
     GrocerCook: any;
     GrocerDinning: any;
     farmHarvest: any;
-    farmStopSleep: any
+    farmStopSleep: any;
   }
 }
 @ccclass("TownView")
@@ -150,24 +153,24 @@ export class TownView extends Component {
   homeBedFrameIndex = 0;
 
   info_farmland1 = {
-    farmland: 'farmland1',
-    fieldNode: null
-  }
+    farmland: "farmland1",
+    fieldNode: null,
+  };
 
   info_farmland2 = {
-    farmland: 'farmland2',
-    fieldNode: null
-  }
+    farmland: "farmland2",
+    fieldNode: null,
+  };
 
   info_farmland3 = {
-    farmland: 'farmland3',
-    fieldNode: null
-  }
+    farmland: "farmland3",
+    fieldNode: null,
+  };
 
   info_farmland4 = {
-    farmland: 'farmland4',
-    fieldNode: null
-  }
+    farmland: "farmland4",
+    fieldNode: null,
+  };
 
   // farmland4 = [];
 
@@ -175,8 +178,8 @@ export class TownView extends Component {
 
   // farmland1 = [];
 
-  testFrameIndex = 0
-  testbakerIndex = 0
+  testFrameIndex = 0;
+  testbakerIndex = 0;
 
   private _layerFloor: TiledLayer = null!;
   async start() {
@@ -185,7 +188,7 @@ export class TownView extends Component {
     json.type = 1;
     socket.sendWebSocketBinary(json);
 
-    modelMgr.townModel.refreshItemDate()
+    modelMgr.townModel.refreshItemDate();
 
     observer.on(EventType.SOCKET_GETALL_NPCS, this.setNPCPos, this);
     observer.on(EventType.SOCKET_ONLINE_NPCS, this.initOtherNPCByData, this);
@@ -193,11 +196,23 @@ export class TownView extends Component {
     //observer.on(EventType.SOCKET_NPC_MOVE, this.updateOtherPlayerInfo, this);
     observer.on(EventType.SOCKET_NPC_ACTION, this.playNPCAction, this);
 
-    observer.on(EventType.SOCKET_ITEM_STATE_CHANGE, this.objectStateChange, this);
+    observer.on(
+      EventType.SOCKET_ITEM_STATE_CHANGE,
+      this.objectStateChange,
+      this
+    );
 
-    observer.on(EventType.SOCKET_ITEMUPDATE, this.updateObjectStateChange, this);
+    observer.on(
+      EventType.SOCKET_ITEMUPDATE,
+      this.updateObjectStateChange,
+      this
+    );
 
-    observer.on(EventType.SOCKET_ITEMUPDATE, this.updateObjectStateChange, this);
+    observer.on(
+      EventType.SOCKET_ITEMUPDATE,
+      this.updateObjectStateChange,
+      this
+    );
 
     this._layerFloor = this.node.getComponent(TiledMap).getLayer("building")!;
 
@@ -209,52 +224,46 @@ export class TownView extends Component {
     //!herd
     window.herdSleep = () => {
       this.playNPCAction({
-        data:{
-            data:        {
-        bid: 10,
-        actionId: 106,
-        npcId: 10004,
-        params: {
-          oid: "breedingBed",
+        data: {
+          data: {
+            bid: 10,
+            actionId: 106,
+            npcId: 10004,
+            params: {
+              oid: "breedingBed",
+            },
+          },
         },
-      }
-        }
-      }
-
-);
+      });
     };
 
     window.herdCook = () => {
-      this.playNPCAction(
-        
-        {
-            data:{
-                data: {
-                    bid: 11,
-                    actionId: 104,
-                    npcId: 10004,
-                    params: {
-                      oid: "breedingCook",
-                      items: [
-                        {
-                          itemId: 10101006,
-                          count: 1,
-                        },
-                        {
-                          itemId: 10101003,
-                          count: 1,
-                        },
-                        {
-                          itemId: 10101005,
-                          count: 1,
-                        },
-                      ],
-                    },
-                  }
-            }
-        }
-
-);
+      this.playNPCAction({
+        data: {
+          data: {
+            bid: 11,
+            actionId: 104,
+            npcId: 10004,
+            params: {
+              oid: "breedingCook",
+              items: [
+                {
+                  itemId: 10101006,
+                  count: 1,
+                },
+                {
+                  itemId: 10101003,
+                  count: 1,
+                },
+                {
+                  itemId: 10101005,
+                  count: 1,
+                },
+              ],
+            },
+          },
+        },
+      });
     };
 
     window.herdDinning = () => {
@@ -272,8 +281,8 @@ export class TownView extends Component {
 
     window.farm = async () => {
       await this.playNPCAction({
-        data:{
-          data:{
+        data: {
+          data: {
             bid: 13,
             actionId: 100,
             npcId: 10002,
@@ -281,64 +290,61 @@ export class TownView extends Component {
               oid: "farmland4",
               itemId: 10101001,
             },
-          }
-
-        }
-
+          },
+        },
       });
     };
 
-    window.farmHarvest = () =>{
-        this.playNPCAction({
-            data:{
-                data:{
-                    bid: 14,
-                    actionId: 101,
-                    npcId: 10002,
-                    params: {
-                      oid: "farmland4",
-                      items: [
-                        {
-                          itemId: 10101001,
-                          count: 1,
-                        },
-                      ]}
-                }
-
-            }
-    });
-    }
-
-    window.farmGoSleep = () => {
-
-      this.playNPCAction(        {
-        data:{
-            data:{
-                bid: 15,
-                actionId: 106,
-                npcId: 10002,
-                params: {
-                  oid: "farmerBed",
+    window.farmHarvest = () => {
+      this.playNPCAction({
+        data: {
+          data: {
+            bid: 14,
+            actionId: 101,
+            npcId: 10002,
+            params: {
+              oid: "farmland4",
+              items: [
+                {
+                  itemId: 10101001,
+                  count: 1,
                 },
-              }
-        }
-    });
+              ],
+            },
+          },
+        },
+      });
     };
 
-    window.farmStopSleep = ()=>{
-        this.playNPCAction(        {
-            data:{
-                data:{
-                    bid: 15,
-                    actionId: 111,
-                    npcId: 10002,
-                    params: {
-                      oid: "farmerBed",
-                    },
-                  }
-            }
-        })
-    }
+    window.farmGoSleep = () => {
+      this.playNPCAction({
+        data: {
+          data: {
+            bid: 15,
+            actionId: 106,
+            npcId: 10002,
+            params: {
+              oid: "farmerBed",
+            },
+          },
+        },
+      });
+    };
+
+    window.farmStopSleep = () => {
+      this.playNPCAction({
+        data: {
+          data: {
+            bid: 15,
+            actionId: 111,
+            npcId: 10002,
+            params: {
+              oid: "farmerBed",
+            },
+          },
+        },
+      });
+    };
 
     window.farmcook = () => {
       this.playNPCAction({
@@ -376,16 +382,16 @@ export class TownView extends Component {
       });
     };
 
-    window.fieldReady = ()=>{
-        this.setFieldReady({
-            bid: 18,
-            actionId: 105,
-            npcId: 10002,
-            params: {
-              oid: "farmland4",
-            }
-        })
-    }
+    window.fieldReady = () => {
+      this.setFieldReady({
+        bid: 18,
+        actionId: 105,
+        npcId: 10002,
+        params: {
+          oid: "farmland4",
+        },
+      });
+    };
 
     //!baker
     window.bakerSleep = () => {
@@ -434,53 +440,53 @@ export class TownView extends Component {
         },
       });
     };
-        //!baker
-        window.GrocerSleep = () => {
-            this.playNPCAction({
-                bid: 21,
-              actionId: 106,
-              npcId: 10003,
-              params: {
-                oid: "salerBed",
-              },
-            });
-          };
-      
-          window.GrocerCook = () => {
-            this.playNPCAction({
-                bid: 22,
-              actionId: 104,
-              npcId: 10003,
-              params: {
-                oid: "salerCook",
-                items: [
-                  {
-                    itemId: 10101006,
-                    count: 1,
-                  },
-                  {
-                    itemId: 10101003,
-                    count: 1,
-                  },
-                  {
-                    itemId: 10101005,
-                    count: 1,
-                  },
-                ],
-              },
-            });
-          };
-      
-          window.GrocerDinning = () => {
-            this.playNPCAction({
-              bid: 23,
-              actionId: 105,
-              npcId: 10003,
-              params: {
-                oid: "salerTable",
-              },
-            });
-          };
+    //!baker
+    window.GrocerSleep = () => {
+      this.playNPCAction({
+        bid: 21,
+        actionId: 106,
+        npcId: 10003,
+        params: {
+          oid: "salerBed",
+        },
+      });
+    };
+
+    window.GrocerCook = () => {
+      this.playNPCAction({
+        bid: 22,
+        actionId: 104,
+        npcId: 10003,
+        params: {
+          oid: "salerCook",
+          items: [
+            {
+              itemId: 10101006,
+              count: 1,
+            },
+            {
+              itemId: 10101003,
+              count: 1,
+            },
+            {
+              itemId: 10101005,
+              count: 1,
+            },
+          ],
+        },
+      });
+    };
+
+    window.GrocerDinning = () => {
+      this.playNPCAction({
+        bid: 23,
+        actionId: 105,
+        npcId: 10003,
+        params: {
+          oid: "salerTable",
+        },
+      });
+    };
     //await this.testFarmRound()
     //await this.testBakerRound()
     //this.tiledLayer.addUserNode(this.playerNode)
@@ -494,15 +500,14 @@ export class TownView extends Component {
     NPCs?.data?.data?.otherNpc && this.initOtherNPCs(NPCs.data.data.otherNpc);
   }
 
-  async checkPlayerId(actionData){
-
+  async checkPlayerId(actionData) {
     const item = _.find(actionData.users, (item) => {
       return item === GlobalConfig.instance.LoginData.data.player.playerId;
     });
-    if(item || !actionData?.users?.length){
-      return true
-    }else{
-      return false
+    if (item || !actionData?.users?.length) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -520,9 +525,9 @@ export class TownView extends Component {
       this.bakerHomeBedHead.getPosition().y
     );
     this.grocerHomeBedHead.setPosition(
-        sleepFramePosX[currentIndex],
-        this.grocerHomeBedHead.getPosition().y
-      );
+      sleepFramePosX[currentIndex],
+      this.grocerHomeBedHead.getPosition().y
+    );
   }
 
   getPartInfo(label: string, id: number) {
@@ -607,7 +612,24 @@ export class TownView extends Component {
     }, bubbleTime);
   }
 
-
+  sendEventOver(actionData: DataEvents, npc) {
+    let json = new network.NpcActionDone();
+    json.command = 10008;
+    json.type = 1;
+    json.data.bid = actionData.bid;
+    json.data.npcId = actionData.npcId;
+    json.data.objId = actionData.params.oid;
+    json.data.x = npc.getPosition().x;
+    json.data.y = hight - npc.getPosition().y;
+    json.data.isFinish = 1;
+    json.data.state = 1;
+    json.data.params = {
+      oid: actionData.params.oid,
+      itemId: actionData.params.itemId,
+      count: 1,
+    };
+    socket.sendWebSocketBinary(json);
+  }
 
   //!npc做饭相关
   async npcCook(npc: Node, actionData: DataEvents, cb?: () => void) {
@@ -622,28 +644,27 @@ export class TownView extends Component {
       await PromiseUtils.wait(bubbleTime * 2000);
       WebUtils.getResouceImg(BubbleImgUrl.cook, npc.getChildByName("bubble"));
 
-      const shouldSend = await this.checkPlayerId(actionData)
+      const shouldSend = await this.checkPlayerId(actionData);
 
-      if(shouldSend){
+      if (shouldSend) {
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = npc.getPosition().x
-        json.data.y = hight - npc.getPosition().y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = npc.getPosition().x;
+        json.data.y = hight - npc.getPosition().y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         json.data.params = {
           oid: actionData.params.oid,
           itemId: actionData.params.itemId,
           count: 1,
-        }
+        };
         socket.sendWebSocketBinary(json);
         await PromiseUtils.wait(bubbleTime * 2000);
       }
-
     }
   }
 
@@ -713,29 +734,25 @@ export class TownView extends Component {
     npc.getChildByName("bubble").active = false;
   }
 
-  setItemCountChange(){
-
-  }
+  setItemCountChange() {}
 
   //!农夫种地
   async npcFarming(npc: Node, actionData: DataEvents) {
-    if(!this[actionData.params.oid]){
-      return
+    if (!this[actionData.params.oid]) {
+      return;
     }
-
-
 
     const farmItem = _.find(ProductsItemUrl.ItemCfg, (item) => {
       return item.id === actionData.params.itemId;
-    })
+    });
 
     const item = instantiate(this[farmItem.fieldName]) as Node;
-    item.setParent(this[actionData.params.oid])
-    this[`info_${actionData.params.oid}`].fieldNode = item
-    item.setPosition(new Vec3(0,0,0))
-    const fieldArr: Node[] = [...item.children]
-    actionData.params.itemId
-    
+    item.setParent(this[actionData.params.oid]);
+    this[`info_${actionData.params.oid}`].fieldNode = item;
+    item.setPosition(new Vec3(0, 0, 0));
+    const fieldArr: Node[] = [...item.children];
+    actionData.params.itemId;
+
     let fieldIndexX = 1;
     let adaptX;
     let adaptY;
@@ -795,241 +812,244 @@ export class TownView extends Component {
     }
   }
 
-    //!农夫收
-    async npcHarvest(npc: Node, actionData: DataEvents) {
-
-      const farmItem = _.find(ProductsItemUrl.ItemCfg, (item) => {
-        return item.id === actionData.params.itemId;
-      })
-      const item = this[`info_${actionData.params.oid}`].fieldNode
-      const fieldArr: Node[] = [...item.children]
-        let fieldIndexX = 1;
-        let adaptX;
-        let adaptY;
-        for (const field of fieldArr) {
-          if (fieldIndexX % 3 === 0) {
-            adaptX = -2;
-            adaptY = 0;
-          } else {
-            adaptX = 0;
-            adaptY = fieldIndexX === 4 || fieldIndexX === 5 ? -2 : 2;
-          }
-          //?锄头气泡
-          WebUtils.getResouceImg(
-            BubbleImgUrl.farmerSickle,
-            npc.getChildByName("bubble"),
-            () => {
-              npc.getChildByName("bubble").active = true;
-            }
-          );
-    
-          await PromiseUtils.wait(bubbleTime * 2000);
-          //作物
-          field.active = false;
-          field.getChildByName('farm_wheat_l').active = false
-          await PromiseUtils.wait(bubbleTime * 2000);
-          //出现作物收获图标
-          const food = _.find(ProductsItemUrl.ItemCfg, (item) => {
-            return item.id === actionData.params.itemId;
-          });
-          WebUtils.getResouceImg(
-            food.url,
-            npc.getChildByName("bubble")
-          );
-          npc.getChildByName('count').active = true
-          await PromiseUtils.wait(bubbleTime * 2000);
-          npc.getChildByName('count').active = false
-          npc.getChildByName("bubble").active = false;
-          const startTile = this._getTilePos(
-            new Vec2(npc.getPosition().x, npc.getPosition().y)
-          );
-          const finishTile = this._getTilePos(
-            new Vec2(
-              npc.getPosition().x + adaptX * 32,
-              npc.getPosition().y + adaptY * 32
-            )
-          );
-          npc
-            .getChildByName("NPCinstantiate")
-            .getComponent(NPCControl)
-            .aStartMove(
-              new Vec2(startTile.x, startTile.y),
-              new Vec2(finishTile.x, finishTile.y),
-              () => {
-                npc
-                  .getChildByName("NPCinstantiate")
-                  .getComponent(NPCControl)
-                  .setNPCMoveDirect(KeyCode.KEY_A);
-              }
-            );
-    
-          fieldIndexX = fieldIndexX + 1;
-          if(fieldIndexX >= 9){
-            // let json = new network.NpcActionDone();
-            // json.command = 10008;
-            // json.type = 1;
-            // json.data.bid = actionData.bid
-            // json.data.npcId = actionData.npcId
-            // json.data.objId = actionData.params.oid
-            // socket.sendWebSocketBinary(json);
-          }
-          await PromiseUtils.wait(bubbleTime * 2000);
-        }
-
-        item.removeFromParent()
-        this[`info_${actionData.params.oid}`].fieldNode = null
+  //!农夫收
+  async npcHarvest(npc: Node, actionData: DataEvents) {
+    const farmItem = _.find(ProductsItemUrl.ItemCfg, (item) => {
+      return item.id === actionData.params.itemId;
+    });
+    const item = this[`info_${actionData.params.oid}`].fieldNode;
+    const fieldArr: Node[] = [...item.children];
+    let fieldIndexX = 1;
+    let adaptX;
+    let adaptY;
+    for (const field of fieldArr) {
+      if (fieldIndexX % 3 === 0) {
+        adaptX = -2;
+        adaptY = 0;
+      } else {
+        adaptX = 0;
+        adaptY = fieldIndexX === 4 || fieldIndexX === 5 ? -2 : 2;
       }
-
-    //!牧民喂养
-    async butcherFeeding(npc: Node, actionData: DataEvents){
-      const img = 'action/bubble/farm/wheat'
+      //?锄头气泡
       WebUtils.getResouceImg(
-        img,
+        BubbleImgUrl.farmerSickle,
         npc.getChildByName("bubble"),
         () => {
           npc.getChildByName("bubble").active = true;
         }
       );
-      npc.getChildByName('count').getComponent(Label).string = `-${actionData.params.count}`
-      npc.getChildByName('count').active = true
+
       await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-
-
-      WebUtils.getResouceImg(
-        BubbleImgUrl.clean,
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      //npc.getChildByName('count').active = true
+      //作物
+      field.active = false;
+      field.getChildByName("farm_wheat_l").active = false;
       await PromiseUtils.wait(bubbleTime * 2000);
-      //npc.getChildByName('count').active = false
-
-      npc.getChildByName("bubble").active = false;
-      
-    }
-
-    async butcherSkill(npc: Node, actionData: DataEvents){
-      const img = 'action/bubble/farm/wheat'
-      WebUtils.getResouceImg(
-        BubbleImgUrl.knife,
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      await PromiseUtils.wait(bubbleTime * 2000);
-
-      WebUtils.getResouceImg(
-        'action/bubble/cook/hock',
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      npc.getChildByName('count').active = true
-      npc.getChildByName('count').getComponent(Label).string = `+${actionData.params.count}`
-      await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-      npc.getChildByName("bubble").active = false;
-    }
-
-    async breadMake(npc: Node, actionData: DataEvents){
-      const img = 'action/bubble/farm/wheat'
-      WebUtils.getResouceImg(
-        'action/bubble/farm/wheat',
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      npc.getChildByName('count').getComponent(Label).string = `-${actionData.params.items[0].count}`
-      npc.getChildByName('count').active = true
-      await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-
-      WebUtils.getResouceImg(
-        'action/bubble/cook/bread',
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      npc.getChildByName('count').getComponent(Label).string = `+${actionData.params.items[0].count}`
-      npc.getChildByName('count').active = true
-      await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-      npc.getChildByName("bubble").active = false;
-    }
-
-    //售货员
-    async sale(npc: Node, actionData: DataEvents){
-      const item = _.find(ProductsItemUrl.ItemCfg, (item) => {
+      //出现作物收获图标
+      const food = _.find(ProductsItemUrl.ItemCfg, (item) => {
         return item.id === actionData.params.itemId;
       });
-      WebUtils.getResouceImg(
-        item.url,
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-      npc.getChildByName('count').getComponent(Label).string = `-${actionData.params.count}`
-      npc.getChildByName('count').active = true
+      WebUtils.getResouceImg(food.url, npc.getChildByName("bubble"));
+      npc.getChildByName("count").active = true;
       await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-
-      WebUtils.getResouceImg(
-        'action/bubble/sale/money',
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
-      );
-
-      npc.getChildByName('count').getComponent(Label).string = `+${actionData.params.count * actionData.params.price}`
-      npc.getChildByName('count').active = true
-      await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
+      npc.getChildByName("count").active = false;
       npc.getChildByName("bubble").active = false;
-    }
-
-    async buy(npc: Node, actionData: DataEvents){
-      const item = _.find(ProductsItemUrl.ItemCfg, (item) => {
-        return item.id === actionData.params.itemId;
-      });
-      WebUtils.getResouceImg(
-        'action/bubble/sale/money',
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
+      const startTile = this._getTilePos(
+        new Vec2(npc.getPosition().x, npc.getPosition().y)
       );
-      npc.getChildByName('count').getComponent(Label).string = `-${actionData.params.count * actionData.params.price}`
-      npc.getChildByName('count').active = true
-      await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-
-      WebUtils.getResouceImg(
-        item.url,
-        npc.getChildByName("bubble"),
-        () => {
-          npc.getChildByName("bubble").active = true;
-        }
+      const finishTile = this._getTilePos(
+        new Vec2(
+          npc.getPosition().x + adaptX * 32,
+          npc.getPosition().y + adaptY * 32
+        )
       );
-      npc.getChildByName('count').getComponent(Label).string = `+${actionData.params.count}`
-      npc.getChildByName('count').active = true
+      npc
+        .getChildByName("NPCinstantiate")
+        .getComponent(NPCControl)
+        .aStartMove(
+          new Vec2(startTile.x, startTile.y),
+          new Vec2(finishTile.x, finishTile.y),
+          () => {
+            npc
+              .getChildByName("NPCinstantiate")
+              .getComponent(NPCControl)
+              .setNPCMoveDirect(KeyCode.KEY_A);
+          }
+        );
+
+      fieldIndexX = fieldIndexX + 1;
+      if (fieldIndexX >= 9) {
+        // let json = new network.NpcActionDone();
+        // json.command = 10008;
+        // json.type = 1;
+        // json.data.bid = actionData.bid
+        // json.data.npcId = actionData.npcId
+        // json.data.objId = actionData.params.oid
+        // socket.sendWebSocketBinary(json);
+      }
       await PromiseUtils.wait(bubbleTime * 2000);
-      npc.getChildByName('count').active = false
-      npc.getChildByName("bubble").active = false;
     }
 
-    speak(npc, actionData){
-      npc.getChildByName('speakContent').getComponent(Label).string = actionData.params.content
-      npc.getChildByName('speakContent').active = true
-    }
+    item.removeFromParent();
+    this[`info_${actionData.params.oid}`].fieldNode = null;
+  }
+
+  //!牧民喂养
+  async butcherFeeding(npc: Node, actionData: DataEvents) {
+    const img = "action/bubble/farm/wheat";
+    WebUtils.getResouceImg(img, npc.getChildByName("bubble"), () => {
+      npc.getChildByName("bubble").active = true;
+    });
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `-${actionData.params.count}`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+
+    WebUtils.getResouceImg(
+      BubbleImgUrl.clean,
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    //npc.getChildByName('count').active = true
+    await PromiseUtils.wait(bubbleTime * 2000);
+    //npc.getChildByName('count').active = false
+
+    npc.getChildByName("bubble").active = false;
+  }
+
+  async butcherSkill(npc: Node, actionData: DataEvents) {
+    const img = "action/bubble/farm/wheat";
+    WebUtils.getResouceImg(
+      BubbleImgUrl.knife,
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    await PromiseUtils.wait(bubbleTime * 2000);
+
+    WebUtils.getResouceImg(
+      "action/bubble/cook/hock",
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    npc.getChildByName("count").active = true;
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `+${actionData.params.count}`;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+    npc.getChildByName("bubble").active = false;
+  }
+
+  async breadMake(npc: Node, actionData: DataEvents) {
+    const img = "action/bubble/farm/wheat";
+    WebUtils.getResouceImg(
+      "action/bubble/farm/wheat",
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `-${actionData.params.items[0].count}`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+
+    WebUtils.getResouceImg(
+      "action/bubble/cook/bread",
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `+${actionData.params.items[0].count}`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+    npc.getChildByName("bubble").active = false;
+  }
+
+  //售货员
+  async sale(npc: Node, actionData: DataEvents) {
+    const item = _.find(ProductsItemUrl.ItemCfg, (item) => {
+      return item.id === actionData.params.itemId;
+    });
+    WebUtils.getResouceImg(item.url, npc.getChildByName("bubble"), () => {
+      npc.getChildByName("bubble").active = true;
+    });
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `-${actionData.params.count}`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+
+    WebUtils.getResouceImg(
+      "action/bubble/sale/money",
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+
+    npc.getChildByName("count").getComponent(Label).string = `+${
+      actionData.params.count * actionData.params.price
+    }`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+    npc.getChildByName("bubble").active = false;
+  }
+
+  async buy(npc: Node, actionData: DataEvents) {
+    const item = _.find(ProductsItemUrl.ItemCfg, (item) => {
+      return item.id === actionData.params.itemId;
+    });
+    WebUtils.getResouceImg(
+      "action/bubble/sale/money",
+      npc.getChildByName("bubble"),
+      () => {
+        npc.getChildByName("bubble").active = true;
+      }
+    );
+    npc.getChildByName("count").getComponent(Label).string = `-${
+      actionData.params.count * actionData.params.price
+    }`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+
+    WebUtils.getResouceImg(item.url, npc.getChildByName("bubble"), () => {
+      npc.getChildByName("bubble").active = true;
+    });
+    npc
+      .getChildByName("count")
+      .getComponent(Label).string = `+${actionData.params.count}`;
+    npc.getChildByName("count").active = true;
+    await PromiseUtils.wait(bubbleTime * 2000);
+    npc.getChildByName("count").active = false;
+    npc.getChildByName("bubble").active = false;
+  }
+
+  speak(npc, actionData) {
+    npc.getChildByName("speakContentUp").getChildByName('Label').getComponent(Label).string =
+      actionData.params.content;
+    npc.getChildByName("speakContentUp").active = true;
+    this.scheduleOnce(()=>{
+      npc.getChildByName("speakContentUp").active = false;
+    }, 4)
+    
+  }
 
   stopFarming(npc: Node, cb?: () => void) {
     npc.getChildByName("bubble").active = false;
@@ -1038,41 +1058,78 @@ export class TownView extends Component {
   //?接收行为数据
   async playNPCAction(actions: any) {
     //!先移动到位置
-    const actionData : DataEvents= actions.data.data
+    const actionData: DataEvents = actions.data.data;
     const npc = _.find(this.otherNPCarr, (item) => {
       return (
         item.getChildByName("NPCinstantiate").getComponent(NPCControl).NpcID ===
         actionData.npcId
       );
     });
-    let eventPox
-    let finishTile
+    let eventPox;
+    let finishTile;
 
     const startTile = this._getTilePos(
       new Vec2(npc.getPosition().x, npc.getPosition().y)
     );
     try {
-          
-      if(actionData.actionId === NpcEventType.speak){
+      if (actionData.actionId === NpcEventType.speak) {
         const toNpc = _.find(this.otherNPCarr, (item) => {
           return (
-            item.getChildByName("NPCinstantiate").getComponent(NPCControl).NpcID ===
-            actionData.params.npcId
+            item.getChildByName("NPCinstantiate").getComponent(NPCControl)
+              .NpcID === actionData.params.npcId
           );
         });
-        const toPos = this._getTilePos(
+        let toPos = this._getTilePos(
           new Vec2(toNpc.getPosition().x, toNpc.getPosition().y)
         );
-        eventPox = toNpc.getPosition()
-        finishTile = toPos;
-      }else{
-        finishTile =  this._getTilePos(new Vec2(eventPox.x, eventPox.y));
-      }
 
-  } catch (error) {
-      
-  }
-    
+        let moveToPos;
+
+          if (
+            !this._layerFloor
+              ?.getComponent(TiledLayer)
+              ?.getTileGIDAt(toPos.x + 1, toPos.y + 1)
+          ) {
+            moveToPos = new Vec2(toPos.x + 1, toPos.y + 1);
+          }
+          if (
+            !this._layerFloor
+              ?.getComponent(TiledLayer)
+              ?.getTileGIDAt(toPos.x - 1, toPos.y - 1)
+          ) {
+            moveToPos = new Vec2(toPos.x - 1, toPos.y - 1);
+          }
+          if (
+            !this._layerFloor
+              ?.getComponent(TiledLayer)
+              ?.getTileGIDAt(toPos.x + 1, toPos.y - 1)
+          ) {
+            moveToPos = new Vec2(toPos.x + 1, toPos.y - 1);
+          }
+          if (
+            !this._layerFloor
+              ?.getComponent(TiledLayer)
+              ?.getTileGIDAt(toPos.x - 1, toPos.y + 1)
+          ) {
+            moveToPos = new Vec2(toPos.x - 1, toPos.y + 1);
+          }
+
+        eventPox = toNpc.getPosition();
+        finishTile = moveToPos;
+      } else {
+        eventPox = new Vec2(
+          this.tileObject.getObject(actionData.params.oid).x,
+          this.tileObject.getObject(actionData.params.oid).y
+        );
+        finishTile = this._getTilePos(
+          new Vec2(
+            this.tileObject.getObject(actionData.params.oid).x,
+            this.tileObject.getObject(actionData.params.oid).y
+          )
+        );
+      }
+    } catch (error) {}
+
     let cb: any;
 
     //!然后出发事件气泡
@@ -1083,23 +1140,23 @@ export class TownView extends Component {
         this.npcSleep(npc, nodes.head, nodes.bubble, async () => {
           npc.getChildByName("bubble").active = false;
           npc.active = false;
-          const shouldSend = await this.checkPlayerId(actionData)
-          if(!shouldSend){
-            return
+          const shouldSend = await this.checkPlayerId(actionData);
+          if (!shouldSend) {
+            return;
           }
           let json = new network.NpcActionDone();
           json.command = 10008;
           json.type = 1;
-          json.data.bid = actionData.bid
-          json.data.npcId = actionData.npcId
-          json.data.objId = actionData.params.oid
-          json.data.x = eventPox.x
-          json.data.y = hight - eventPox.y
-          json.data.isFinish = 1 
-          json.data.state = 1 
+          json.data.bid = actionData.bid;
+          json.data.npcId = actionData.npcId;
+          json.data.objId = actionData.params.oid;
+          json.data.x = eventPox.x;
+          json.data.y = hight - eventPox.y;
+          json.data.isFinish = 1;
+          json.data.state = 1;
           json.data.params = {
-            oid: actionData.params.oid
-          }
+            oid: actionData.params.oid,
+          };
           socket.sendWebSocketBinary(json);
         });
       };
@@ -1112,256 +1169,253 @@ export class TownView extends Component {
       cb = async () => {
         this.setNpcDirect(npc, actionData, "diningHeadDirect");
         await this.npcDinning(npc, actionData);
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         json.data.params = {
           oid: actionData.params.oid,
           itemId: actionData.params.itemId,
           count: 1,
-        }
+        };
         socket.sendWebSocketBinary(json);
       };
     } else if (actionData.actionId === NpcEventType.farming) {
       cb = async () => {
-
         npc
           .getChildByName("NPCinstantiate")
           .getComponent(NPCControl)
           .setNPCMoveDirect(KeyCode.KEY_A);
         await PromiseUtils.wait(bubbleTime * 2000);
         await this.npcFarming(npc, actionData);
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         json.data.params = {
           oid: actionData.params.oid,
           itemId: actionData.params.itemId,
           count: 9,
-        }
+        };
         socket.sendWebSocketBinary(json);
       };
-    } else if (actionData.actionId === NpcEventType.harvest){
-        cb = async () => {
-            npc
-            .getChildByName("NPCinstantiate")
-            .getComponent(NPCControl)
-            .setNPCMoveDirect(KeyCode.KEY_A);
-            await PromiseUtils.wait(bubbleTime * 2000);
-            await this.npcHarvest(npc,actionData)
-            const shouldSend = await this.checkPlayerId(actionData)
-            if(!shouldSend){
-              return
-            }
-            let json = new network.NpcActionDone();
-            json.command = 10008;
-            json.type = 1;
-            json.data.bid = actionData.bid
-            json.data.npcId = actionData.npcId
-            json.data.objId = actionData.params.oid
-            json.data.x = eventPox.x
-            json.data.y = hight - eventPox.y
-            json.data.isFinish = 1 
-            json.data.state = 1 
-            json.data.params = {
-              oid: actionData.params.oid
-            }
-            socket.sendWebSocketBinary(json);
-          };
-
-    } else if (actionData.actionId === NpcEventType.getup){
-        cb = async ()=>{
-          const shouldSend = await this.checkPlayerId(actionData)
-          if(!shouldSend){
-            return
-          }
-            let json = new network.NpcActionDone();
-            json.command = 10008;
-            json.type = 1;
-            json.data.bid = actionData.bid
-            json.data.npcId = actionData.npcId
-            json.data.objId = actionData.params.oid
-            json.data.x = eventPox.x
-            json.data.y = hight - eventPox.y
-            json.data.isFinish = 1 
-            json.data.state = 1 
-            json.data.params = {
-              oid: actionData.params.oid
-            }
-            socket.sendWebSocketBinary(json);
-        }
-
-    } else if(actionData.actionId === NpcEventType.move){
+    } else if (actionData.actionId === NpcEventType.harvest) {
       cb = async () => {
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        npc
+          .getChildByName("NPCinstantiate")
+          .getComponent(NPCControl)
+          .setNPCMoveDirect(KeyCode.KEY_A);
+        await PromiseUtils.wait(bubbleTime * 2000);
+        await this.npcHarvest(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.npcId = actionData.npcId
-        json.data.actionId = 112
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
-        json.data.bid = actionData.bid
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
+        json.data.params = {
+          oid: actionData.params.oid,
+        };
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.move){
+    } else if (actionData.actionId === NpcEventType.getup) {
       cb = async () => {
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.npcId = actionData.npcId
-        json.data.actionId = 112
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
-        json.data.bid = actionData.bid
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
+        json.data.params = {
+          oid: actionData.params.oid,
+        };
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.speak){
+    } else if (actionData.actionId === NpcEventType.move) {
       cb = async () => {
-        this.speak(npc, actionData)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
+        }
+        let json = new network.NpcActionDone();
+        json.command = 10008;
+        json.type = 1;
+        json.data.npcId = actionData.npcId;
+        json.data.actionId = 112;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
+        json.data.bid = actionData.bid;
+        socket.sendWebSocketBinary(json);
+      };
+    } else if (actionData.actionId === NpcEventType.move) {
+      cb = async () => {
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
+        }
+        let json = new network.NpcActionDone();
+        json.command = 10008;
+        json.type = 1;
+        json.data.npcId = actionData.npcId;
+        json.data.actionId = 112;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
+        json.data.bid = actionData.bid;
+        socket.sendWebSocketBinary(json);
+      };
+    } else if (actionData.actionId === NpcEventType.speak) {
+      cb = async () => {
+        this.speak(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
 
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.buy){
+    } else if (actionData.actionId === NpcEventType.buy) {
       cb = async () => {
-        await this.buy(npc, actionData,)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        await this.buy(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.sale){
+    } else if (actionData.actionId === NpcEventType.sale) {
       cb = async () => {
-        await this.sale(npc, actionData,)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        await this.sale(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.slaughter){
+    } else if (actionData.actionId === NpcEventType.slaughter) {
       cb = async () => {
-        await this.butcherSkill(npc, actionData,)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        await this.butcherSkill(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.make){
+    } else if (actionData.actionId === NpcEventType.make) {
       cb = async () => {
-        await this.breadMake(npc, actionData,)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        await this.breadMake(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
-    } else if(actionData.actionId === NpcEventType.feeding){
+    } else if (actionData.actionId === NpcEventType.feeding) {
       cb = async () => {
-        await this.butcherFeeding(npc, actionData,)
-        const shouldSend = await this.checkPlayerId(actionData)
-        if(!shouldSend){
-          return
+        await this.butcherFeeding(npc, actionData);
+        const shouldSend = await this.checkPlayerId(actionData);
+        if (!shouldSend) {
+          return;
         }
         let json = new network.NpcActionDone();
         json.command = 10008;
         json.type = 1;
-        json.data.bid = actionData.bid
-        json.data.npcId = actionData.npcId
-        json.data.objId = actionData.params.oid
-        json.data.x = eventPox.x
-        json.data.y = hight - eventPox.y
-        json.data.isFinish = 1 
-        json.data.state = 1 
+        json.data.bid = actionData.bid;
+        json.data.npcId = actionData.npcId;
+        json.data.objId = actionData.params.oid;
+        json.data.x = eventPox.x;
+        json.data.y = hight - eventPox.y;
+        json.data.isFinish = 1;
+        json.data.state = 1;
         socket.sendWebSocketBinary(json);
       };
     }
@@ -1370,40 +1424,37 @@ export class TownView extends Component {
     //     return
     // }
 
-      this.stopActionNormal(npc, actionData);
-      npc
-        .getChildByName("NPCinstantiate")
-        .getComponent(NPCControl)
-        .aStartMove(
-          new Vec2(startTile.x, startTile.y),
-          new Vec2(finishTile.x, finishTile.y),
-          cb
-        );
-    
-
+    this.stopActionNormal(npc, actionData);
+    npc
+      .getChildByName("NPCinstantiate")
+      .getComponent(NPCControl)
+      .aStartMove(
+        new Vec2(startTile.x, startTile.y),
+        new Vec2(finishTile.x, finishTile.y),
+        cb
+      );
   }
 
   async setFieldReady(actionData: any) {
-    
     const farmItem = _.find(ProductsItemUrl.ItemCfg, (item) => {
       return item.id === actionData.params.itemId;
-    })
+    });
 
     const item = instantiate(this[farmItem.fieldName]) as Node;
-    item.setParent(this[actionData.params.oid])
-    this[`info_${actionData.params.oid}`].fieldNode = item
-    item.setPosition(new Vec3(0,0,0))
-    const fieldArr: Node[] = [...item.children]
-    if(!fieldArr){
-      return
+    item.setParent(this[actionData.params.oid]);
+    this[`info_${actionData.params.oid}`].fieldNode = item;
+    item.setPosition(new Vec3(0, 0, 0));
+    const fieldArr: Node[] = [...item.children];
+    if (!fieldArr) {
+      return;
     }
     let fieldIndexX = 1;
     let adaptX;
     let adaptY;
     for (const field of fieldArr) {
-        field.active = true
-        await PromiseUtils.wait(bubbleTime * 2000);
-        field.getChildByName('farm_wheat_l').active = true
+      field.active = true;
+      await PromiseUtils.wait(bubbleTime * 2000);
+      field.getChildByName("farm_wheat_l").active = true;
     }
   }
 
@@ -1488,8 +1539,12 @@ export class TownView extends Component {
     item.getChildByName("NPCinstantiate").getComponent(NPCControl)._curTile =
       npcTile;
     item.setPosition(pos.x, pos.y);
+    if (NPC.id === 10002) {
+      GlobalConfig.instance.curViewNpcX = pos.x;
+      GlobalConfig.instance.curViewNpcY = pos.y;
+    }
     item.getChildByName("NPCinstantiate").getComponent(NPCControl).npcIndex =
-    NpcIndex[NPC.id];
+      NpcIndex[NPC.id];
     this.scheduleOnce(() => {
       WebUtils.getResouceImg(
         this.getPartInfo("body", NPC.model)?.frame_path,
@@ -1614,8 +1669,8 @@ export class TownView extends Component {
             // json.data.npcId = data.data.npcId
             // json.data.x = moveNPC.getPosition().x
             // json.data.y = hight - moveNPC.getPosition().y
-            // json.data.isFinish = 1 
-            // json.data.state = 1 
+            // json.data.isFinish = 1
+            // json.data.state = 1
             // socket.sendWebSocketBinary(json);
           },
         }
@@ -1637,7 +1692,7 @@ export class TownView extends Component {
     // observer.off(EventType.SOCKET_OFFLINE_NPCS, this.removeNPC, this)
   }
 
-  async testFarmRound(){
+  async testFarmRound() {
     // await PromiseUtils.wait(bubbleTime * 1000);
     // window.farmcook()
     // await PromiseUtils.wait(bubbleTime * 20000);
@@ -1654,7 +1709,7 @@ export class TownView extends Component {
     // this.testFrameIndex = 0
   }
 
-  async testBakerRound(){
+  async testBakerRound() {
     // await PromiseUtils.wait(bubbleTime * 1000);
     // window.bakerCook()
     // await PromiseUtils.wait(bubbleTime * 60000);
@@ -1665,34 +1720,41 @@ export class TownView extends Component {
     // this.testbakerIndex = 0
   }
 
-  async updateObjectStateChange(data){
-    data?.data && data.data.forEach(async (object)=>{
-      if(object.objId === 'farmland1' || object.objId === 'farmland2' || object.objId === 'farmland3' || object.objId === 'farmland4'){
-        if(object.state === '2'){
-          await this.setFieldReady({
-            params:{
-              oid: object.objId,
-              itemId: object.params.itemId
-            }
-
-          })
+  async updateObjectStateChange(data) {
+    data?.data &&
+      data.data.forEach(async (object) => {
+        if (
+          object.objId === "farmland1" ||
+          object.objId === "farmland2" ||
+          object.objId === "farmland3" ||
+          object.objId === "farmland4"
+        ) {
+          if (object.state === "2") {
+            await this.setFieldReady({
+              params: {
+                oid: object.objId,
+                itemId: object.params.itemId,
+              },
+            });
+          }
         }
-      }
-    })
-
+      });
   }
 
-  async objectStateChange(data){
-    if(data.data.oid === 'farmland1' || data.data.oid === 'farmland3' || data.data.oid === 'farmland4'){
-      if(data.data.state === '2'){
+  async objectStateChange(data) {
+    if (
+      data.data.oid === "farmland1" ||
+      data.data.oid === "farmland3" ||
+      data.data.oid === "farmland4"
+    ) {
+      if (data.data.state === "2") {
         await this.setFieldReady({
-          params:{
+          params: {
             oid: data.oid,
-            itemId: data.params.itemId
-          }
-        })
+            itemId: data.params.itemId,
+          },
+        });
       }
-
     }
   }
 
@@ -1704,15 +1766,13 @@ export class TownView extends Component {
       this.sleepFrameAdd = 0;
     }
 
-    if(this.testbakerIndex === 0){
-        this.testbakerIndex = this.testbakerIndex + deltaTime
-        this.testBakerRound()
+    if (this.testbakerIndex === 0) {
+      this.testbakerIndex = this.testbakerIndex + deltaTime;
+      this.testBakerRound();
     }
-    if(this.testFrameIndex === 0){
-        this.testFrameIndex = this.testFrameIndex + deltaTime
-        await this.testFarmRound()
+    if (this.testFrameIndex === 0) {
+      this.testFrameIndex = this.testFrameIndex + deltaTime;
+      await this.testFarmRound();
     }
-
-
   }
 }

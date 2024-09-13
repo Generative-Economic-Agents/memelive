@@ -27,6 +27,8 @@ export class GlobalConfig {
     catRootNode: Node = new Node();
     testTools: boolean = false;
     currentNpcIndex: any = 0;
+    curViewNpcY: number;
+    curViewNpcX: number;
     static get instance() {
         if (this._instance) {
             return this._instance;
