@@ -87,13 +87,14 @@ System.register(["__unresolved_0", "cc", "reconnecting-websocket", "__unresolved
           var currentURL = window.location.href;
 
           if (currentURL.indexOf("localhost") != -1 || currentURL.indexOf("192.168") != -1) {
-            //this._url = "ws://192.168.1.100:8686";//本地
+            this._url = "ws://192.168.39.19:8686"; //本地
             //this._url = "wss://13.214.33.171:8989"; //windows
             //this._url = "wss://www.infinitytest.cc:8989"
             //this._url = "ws://44.200.143.84:8989"; //linux
             //this._url = "wss://aitown.infinitytest.cc/api/ws"
             //this._url = "wss://cat.infinityg.ai/api/ws"
-            this._url = "wss://aitown.infinitytest.cc/api/ws";
+            //this._url = "wss://aitown.infinitytest.cc/api/ws"
+
             (_crd && GlobalConfig === void 0 ? (_reportPossibleCrUseOfGlobalConfig({
               error: Error()
             }), GlobalConfig) : GlobalConfig).instance.testTools = true;
