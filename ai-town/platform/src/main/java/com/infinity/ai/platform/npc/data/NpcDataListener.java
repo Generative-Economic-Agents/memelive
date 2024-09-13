@@ -189,8 +189,8 @@ public class NpcDataListener {
         }
 
         talkData.setTalking(talk.isTalking());
-        Set<Long> talkingTo = Optional.ofNullable(talkData.getTalkingTo()).orElse(new HashSet<>());
-        List<TalkData.Contents> contents = Optional.ofNullable(talkData.getContents()).orElse(new ArrayList<>());
+        Set<Long> talkingTo = new HashSet<>();//Optional.ofNullable(talkData.getTalkingTo()).orElse(new HashSet<>());
+        List<TalkData.Contents> contents = new ArrayList<>();//Optional.ofNullable(talkData.getContents()).orElse(new ArrayList<>());
 
         //对我说的
         Map<Long, NpcTalkContent> toMe = talk.getToMe();
@@ -206,7 +206,7 @@ public class NpcDataListener {
         });
 
         //我说的
-        Map<Long, NpcTalkContent> meSay = talk.getMeSay();
+        /*Map<Long, NpcTalkContent> meSay = talk.getMeSay();
         meSay.forEach((npcId, content) -> {
             talkingTo.add(npcId);
             TalkData.Contents ctt = TalkData.Contents.builder()
@@ -216,14 +216,14 @@ public class NpcDataListener {
                     .content(content.content)
                     .build();
             contents.add(ctt);
-        });
+        });*/
 
         talkData.setTalkingTo(talkingTo);
         talkData.setContents(contents);
     }
 
     public NpcData getNpcData() {
-        talk();
+        //talk();
         return npcData;
     }
 

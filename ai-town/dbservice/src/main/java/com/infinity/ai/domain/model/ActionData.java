@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 行为日志
@@ -32,4 +33,6 @@ public class ActionData implements Serializable {
     private String content;
     //行为状态:0：正在做，1：完成
     private int status;
+    //其他参数：
+    private Map<String, Object> params;
 }

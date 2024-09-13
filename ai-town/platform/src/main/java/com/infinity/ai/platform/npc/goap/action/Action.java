@@ -194,6 +194,7 @@ public abstract class Action<T> {
         data.setStartTime(System.currentTimeMillis());
         data.setStatus(0);
         data.setPaid(paid == null ? 0L : paid);
+        data.setParams(new HashMap<>());
         return data;
     }
 

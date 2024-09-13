@@ -37,6 +37,7 @@ public enum ActionEnumType {
      * 109	制作	make
      * 110	说话	transport
      * 111	起床	GetUp
+     * 112	移动	Move
      */
 
     private final int code;
