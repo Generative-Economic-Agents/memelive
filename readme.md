@@ -12,7 +12,8 @@
 
 5. telegram:  telegram的相关代码；目前还用不到。
 
-   
+<img width="657" alt="业务流程图" src="https://github.com/user-attachments/assets/5ce6fe89-0b4a-4452-a8a0-7e4e9f9240dd">
+
 
 ### 二.开发环境准备
 
