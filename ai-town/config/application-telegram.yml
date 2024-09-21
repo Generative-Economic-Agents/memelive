@@ -40,11 +40,9 @@ proxy:
 
 telegram:
   bot:
-    #botUserName: Cat_Academia_Bot
-    #botToken: 7219099700:AAG_Vh19KV31zRNBL5mC4OHe2VF1OC9sc8M
     botUserName: wuji2024_bot
     botToken: 6962037670:AAHseRwquOdt1OvtpV05Iv46AXJqZHEpEKs
-    webHookPath: https://www.infinitytest.cc:8888/webhook
+    webHookPath: https://cat.infinitytest.cc/api/tg/
     gameUrl: https://cat.infinitytest.cc/
     gameName: HaHaCatAcademia
     tgUrl: https://cat.infinitytest.cc/api/tg/
