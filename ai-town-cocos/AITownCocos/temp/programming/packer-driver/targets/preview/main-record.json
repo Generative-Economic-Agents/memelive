@@ -304,7 +304,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 9556026.8462,
+      "mTimestamp": 12271685.677700002,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -2697,7 +2697,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/cases/network/NetworkCtrl.ts": {
       "mTimestamp": {
-        "mtime": 1729503895365.0215,
+        "mtime": 1729514831700.4656,
         "uuid": "2b4f59b0-cb5d-4197-b452-226c631e9fe2"
       },
       "chunkId": "f9e2744f7184d2589f8c9a262fa49f604108cce4",
@@ -5442,7 +5442,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/town/TownView.ts": {
       "mTimestamp": {
-        "mtime": 1729512115285.912,
+        "mtime": 1729514580275.594,
         "uuid": "a641f3d1-d145-4cc9-b3b6-cbbac51e1a82"
       },
       "chunkId": "95297d9b7adb05afb926847c569403d896db4dbb",
@@ -5555,19 +5555,6 @@
           }
         },
         {
-          "value": "lodash",
-          "loc": {
-            "start": {
-              "line": 31,
-              "column": 14
-            },
-            "end": {
-              "line": 31,
-              "column": 22
-            }
-          }
-        },
-        {
           "value": "../StaticUtils/PromiseUtils",
           "resolved": "__unresolved_7",
           "loc": {
@@ -5592,6 +5579,19 @@
             "end": {
               "line": 34,
               "column": 58
+            }
+          }
+        },
+        {
+          "value": "lodash-es",
+          "loc": {
+            "start": {
+              "line": 35,
+              "column": 19
+            },
+            "end": {
+              "line": 35,
+              "column": 30
             }
           }
         }
@@ -5671,13 +5671,6 @@
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/node_modules/lodash/lodash.mjs?cjs=&original=.js"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
             "url": "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/StaticUtils/PromiseUtils.ts"
           },
           "messages": []
@@ -5686,6 +5679,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/game/config/GlobalConfig.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/node_modules/lodash-es/lodash.js"
           },
           "messages": []
         }

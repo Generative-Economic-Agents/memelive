@@ -28,10 +28,11 @@ import {
   ProductsItemUrl,
 } from "../StaticUtils/NPCConfig";
 import { frameSpeed, NPCControl } from "../NPC/NPCControl";
-import * as _ from "lodash";
+//import _ from "lodash";
 import { DataEvents, DataFarmEvent } from "../model/DataEvents";
 import { PromiseUtils } from "../StaticUtils/PromiseUtils";
 import { GlobalConfig } from "../game/config/GlobalConfig";
+import * as _ from "lodash-es";
 const { ccclass, property } = _decorator;
 export const sleepFramePosX = [40, -61];
 export const sleepFrameTime = 0.45;

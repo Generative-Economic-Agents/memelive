@@ -36,7 +36,7 @@ export class NetworkCtrl {
             //this._url = "wss://www.infinitytest.cc:8989"
             //this._url = "ws://44.200.143.84:8989"; //linux
             //this._url = "wss://aitown.infinitytest.cc/api/ws"
-            //this._url = "wss://cat.infinityg.ai/api/ws"
+            //this._url = "ws://192.168.254.114:8686"; //张航本地
             this._url = "wss://aitown.infinitytest.cc/api/ws"
             GlobalConfig.instance.testTools = true
             
@@ -44,6 +44,7 @@ export class NetworkCtrl {
             //this._url = "wss://www.infinitytest.cc:8989"
             //this._url = "wss://cat.infinityg.ai/api/ws"
             //this._url = "wss://cat.infinitytest.cc/api/ws"
+            //this._url = "ws://192.168.254.114:8686"; //张航本地
             this._url = "wss://aitown.infinitytest.cc/api/ws"
             GlobalConfig.instance.testTools = false
         }
