@@ -67,7 +67,7 @@ export class NetworkCtrl {
             "msg":"1"
           }); // 假设服务器用 'pong' 响应心跳
         }, this.heartbeatInterval);
-      }
+    }
 
     onDestroy() {
         let wsiSendBinary = this._wsiSendBinary;

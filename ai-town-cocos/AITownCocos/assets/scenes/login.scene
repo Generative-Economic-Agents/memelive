@@ -138,7 +138,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 320,
-      "y": 500,
+      "y": 700,
       "z": 0
     },
     "_lrot": {
@@ -229,7 +229,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 500,
+    "_orthoHeight": 700,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -2392,7 +2392,7 @@
     "_string": "Enter you account",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 54.384,
+    "_actualFontSize": 30.9,
     "_fontSize": 30.9,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -5202,7 +5202,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 800,
-      "height": 1250
+      "height": 1750
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

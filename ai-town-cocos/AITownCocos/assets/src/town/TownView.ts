@@ -28,7 +28,7 @@ import {
   ProductsItemUrl,
 } from "../StaticUtils/NPCConfig";
 import { frameSpeed, NPCControl } from "../NPC/NPCControl";
-import _ from "lodash";
+import * as _ from "lodash";
 import { DataEvents, DataFarmEvent } from "../model/DataEvents";
 import { PromiseUtils } from "../StaticUtils/PromiseUtils";
 import { GlobalConfig } from "../game/config/GlobalConfig";
@@ -776,6 +776,7 @@ export class TownView extends Component {
           npc.getPosition().y + adaptY * 32
         )
       );
+      console.log("samTest2====" + JSON.stringify(finishTile))
       npc
         .getChildByName("NPCinstantiate")
         .getComponent(NPCControl)
@@ -1063,9 +1064,10 @@ export class TownView extends Component {
         const toPos = this._getTilePos(
           new Vec2(toNpc.getPosition().x, toNpc.getPosition().y)
         );
-        eventPox = toNpc.getPosition()
+        eventPox = toNpc.getPosition();
         finishTile = toPos;
       }else{
+        eventPox = npc.getPosition();
         finishTile =  this._getTilePos(new Vec2(eventPox.x, eventPox.y));
       }
 
@@ -1369,7 +1371,7 @@ export class TownView extends Component {
     // if(startTile.x === finishTile.x && startTile.y === finishTile.y){
     //     return
     // }
-
+    console.log("samTest1====" + JSON.stringify(finishTile))
       this.stopActionNormal(npc, actionData);
       npc
         .getChildByName("NPCinstantiate")

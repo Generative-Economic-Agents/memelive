@@ -1,1 +1,0 @@
-{"version":3,"sources":["file:///Users/feiwang/cutepet/assets/src/game/config/ModuleID.ts"],"names":["ModuleID"],"mappings":";;;;;;;;;;;;;;0BAAaA,Q,GAAW;AACpB,gBAAS,MADW;AAEpB,iBAAQ;AAFY,O","sourcesContent":["export const ModuleID = {\n    \"MAIN\" : \"main\",\n    \"JISHI\":\"jishi\",\n}"]}
