@@ -289,6 +289,7 @@ export default class TownModel extends BaseModel {
         }
         if (repData.command == 10002) {//查询NPC信息
             this._NPCsSeverData = da.data;
+            console.log("npcData=====" + JSON.stringify(this._NPCsSeverData));
             observer.post(EventType.SOCKET_GETALL_NPCS, this._NPCsSeverData);
         } else if (repData.command == 10006) {//修改npc信息
             // let catinfo = this.getServerCatsData(da.data.data.cat.id);

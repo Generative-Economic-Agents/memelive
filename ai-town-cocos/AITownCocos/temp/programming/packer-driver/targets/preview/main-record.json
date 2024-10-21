@@ -304,7 +304,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 12271685.677700002,
+      "mTimestamp": 14255359.436299998,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -3540,7 +3540,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/town/TownModel.ts": {
       "mTimestamp": {
-        "mtime": 1729499204051.1072,
+        "mtime": 1729516288010.258,
         "uuid": "519cbfae-37ee-4b87-aab8-aadf4ea13965"
       },
       "chunkId": "731668115a170360e5048357c786eb843b3c42ed",
@@ -5442,7 +5442,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/town/TownView.ts": {
       "mTimestamp": {
-        "mtime": 1729514580275.594,
+        "mtime": 1729516815394.9607,
         "uuid": "a641f3d1-d145-4cc9-b3b6-cbbac51e1a82"
       },
       "chunkId": "95297d9b7adb05afb926847c569403d896db4dbb",

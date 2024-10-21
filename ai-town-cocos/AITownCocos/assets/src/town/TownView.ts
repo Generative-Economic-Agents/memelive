@@ -1422,6 +1422,7 @@ export class TownView extends Component {
   finishNPCAction(farmAction: DataFarmEvent) {}
 
   initPlayerNPC(myNPC: NPCServerD) {
+    console.log("test111111111")
     this._curPlayerTile = this._getTilePos(new Vec2(9, 11));
     //this.player.parent.getComponent(NPCControl).NpcID = myNPC.id;
     this.player.parent.getComponent(NPCControl)._curTile = new Vec2(9, 11);
@@ -1466,6 +1467,7 @@ export class TownView extends Component {
   }
 
   initOtherNPCs(myNPC: NPCServerD[]) {
+    console.log("test22222222")
     myNPC.forEach((NPC: NPCServerD) => {
       this.initOtherNPC(NPC);
     });
