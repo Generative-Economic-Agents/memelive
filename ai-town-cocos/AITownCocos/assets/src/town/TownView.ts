@@ -10,6 +10,7 @@ import {
   TiledObjectGroup,
   tween,
   UITransform,
+  v3,
   Vec2,
   Vec3,
   view,
@@ -1068,8 +1069,10 @@ export class TownView extends Component {
         eventPox = toNpc.getPosition();
         finishTile = toPos;
       }else{
-        eventPox = npc.getPosition();
-        finishTile =  this._getTilePos(new Vec2(eventPox.x, eventPox.y));
+        if(actionData.params.oid){
+          eventPox = this.tileObject.getObject(actionData.params.oid);
+          finishTile =  this._getTilePos(new Vec2(eventPox.x, eventPox.y));
+        }
       }
 
   } catch (error) {
@@ -1686,7 +1689,6 @@ export class TownView extends Component {
     })
 
   }
-
   async objectStateChange(data){
     if(data.data.oid === 'farmland1' || data.data.oid === 'farmland3' || data.data.oid === 'farmland4'){
       if(data.data.state === '2'){
@@ -1719,5 +1721,30 @@ export class TownView extends Component {
     }
 
 
+  }
+
+  onbtnTest1(){
+    console.log("test1111111");
+    // const npc = _.find(this.otherNPCarr, (item) => {
+    //   return (
+    //     item.getChildByName("NPCinstantiate").getComponent(NPCControl).NpcID ===
+    //     10003
+    //   );
+    // });
+    // let npcNode = npc.getChildByName("NPCinstantiate");
+    // npcNode.setPosition(v3(npcNode.position.x + 20,npcNode.position.y + 20 ,0));
+    // return;
+    this.playNPCAction({
+      data:{
+        data:{
+          bid: 10,
+          actionId: 112,
+          npcId: 10003,
+          params: {
+            oid: "salerBed",
+          },
+        }
+      }
+    })
   }
 }

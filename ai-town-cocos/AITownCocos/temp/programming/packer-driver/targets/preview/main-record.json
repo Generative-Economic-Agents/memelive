@@ -1,7 +1,7 @@
 {
   "modules": {
     "cce:/internal/x/cc": {
-      "mTimestamp": 7862.696000000462,
+      "mTimestamp": 8508.607699990273,
       "chunkId": "93ba276ea7b26ffcdc433fab14afc1ed6f05647b",
       "imports": [
         {
@@ -304,7 +304,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 14255359.436299998,
+      "mTimestamp": 22854088.36739999,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -2905,7 +2905,7 @@
       ]
     },
     "cce:/internal/code-quality/cr.mjs": {
-      "mTimestamp": 1729502561684,
+      "mTimestamp": 1729577574609,
       "chunkId": "6a5019a719a9014c047e67aa1cf34453ab8392ce",
       "imports": [],
       "type": "esm",
@@ -5243,7 +5243,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/NPC/NPCControl.ts": {
       "mTimestamp": {
-        "mtime": 1729499204017.2688,
+        "mtime": 1729583622517.4585,
         "uuid": "7904d604-5998-40fa-8774-e53e94f2871a"
       },
       "chunkId": "bd2dfb738666bb00e94a59abaa9d208d36f98330",
@@ -5442,7 +5442,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/town/TownView.ts": {
       "mTimestamp": {
-        "mtime": 1729516815394.9607,
+        "mtime": 1729600426847.831,
         "uuid": "a641f3d1-d145-4cc9-b3b6-cbbac51e1a82"
       },
       "chunkId": "95297d9b7adb05afb926847c569403d896db4dbb",
@@ -5461,11 +5461,11 @@
           "value": "cc",
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 7
             },
             "end": {
-              "line": 16,
+              "line": 17,
               "column": 11
             }
           }
@@ -5475,11 +5475,11 @@
           "resolved": "__unresolved_1",
           "loc": {
             "start": {
-              "line": 17,
+              "line": 18,
               "column": 43
             },
             "end": {
-              "line": 17,
+              "line": 18,
               "column": 56
             }
           }
@@ -5489,11 +5489,11 @@
           "resolved": "__unresolved_2",
           "loc": {
             "start": {
-              "line": 18,
+              "line": 19,
               "column": 26
             },
             "end": {
-              "line": 18,
+              "line": 19,
               "column": 40
             }
           }
@@ -5503,11 +5503,11 @@
           "resolved": "__unresolved_3",
           "loc": {
             "start": {
-              "line": 20,
+              "line": 21,
               "column": 24
             },
             "end": {
-              "line": 20,
+              "line": 21,
               "column": 46
             }
           }
@@ -5517,11 +5517,11 @@
           "resolved": "__unresolved_4",
           "loc": {
             "start": {
-              "line": 21,
+              "line": 22,
               "column": 21
             },
             "end": {
-              "line": 21,
+              "line": 22,
               "column": 40
             }
           }
@@ -5531,11 +5531,11 @@
           "resolved": "__unresolved_5",
           "loc": {
             "start": {
-              "line": 29,
+              "line": 30,
               "column": 7
             },
             "end": {
-              "line": 29,
+              "line": 30,
               "column": 33
             }
           }
@@ -5545,11 +5545,11 @@
           "resolved": "__unresolved_6",
           "loc": {
             "start": {
-              "line": 30,
+              "line": 31,
               "column": 39
             },
             "end": {
-              "line": 30,
+              "line": 31,
               "column": 58
             }
           }
@@ -5559,11 +5559,11 @@
           "resolved": "__unresolved_7",
           "loc": {
             "start": {
-              "line": 33,
+              "line": 34,
               "column": 29
             },
             "end": {
-              "line": 33,
+              "line": 34,
               "column": 58
             }
           }
@@ -5573,11 +5573,11 @@
           "resolved": "__unresolved_8",
           "loc": {
             "start": {
-              "line": 34,
+              "line": 35,
               "column": 29
             },
             "end": {
-              "line": 34,
+              "line": 35,
               "column": 58
             }
           }
@@ -5586,11 +5586,11 @@
           "value": "lodash-es",
           "loc": {
             "start": {
-              "line": 35,
+              "line": 36,
               "column": 19
             },
             "end": {
-              "line": 35,
+              "line": 36,
               "column": 30
             }
           }
@@ -5777,7 +5777,7 @@
     },
     "file:///D:/workSpace/memelive/ai-town-cocos/AITownCocos/assets/src/StaticUtils/NPCConfig.ts": {
       "mTimestamp": {
-        "mtime": 1729499204019.2805,
+        "mtime": 1729581189472.7463,
         "uuid": "9ea0492b-a604-43dc-9922-55de68180cc5"
       },
       "chunkId": "cb18c5a489ec278526f01e4daa6bed6f71924ddf",
@@ -10931,7 +10931,7 @@
       ]
     },
     "cce:/internal/ml/cjs-loader.mjs": {
-      "mTimestamp": 1729502561684,
+      "mTimestamp": 1729577574609,
       "chunkId": "a0d063530de23ddade53e1a935bf64c81277c061",
       "imports": [],
       "type": "esm",

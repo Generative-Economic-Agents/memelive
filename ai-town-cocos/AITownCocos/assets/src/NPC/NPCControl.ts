@@ -192,7 +192,10 @@ export class NPCControl extends Component {
     }
 
     aStartMove(start, finish, cb?: ()=>void){
+        console.log("start========" + JSON.stringify(start));
+        console.log("finish=======" + JSON.stringify(finish));
         this.aStarPath = this.node.getComponent(AStar).moveToward(start, finish);
+        console.log("astarPath======" + JSON.stringify(this.aStarPath));
         if (this.aStarPath.length <= 1) {
             cb && cb()
             return;
