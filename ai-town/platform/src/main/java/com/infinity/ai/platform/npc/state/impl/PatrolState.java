@@ -2,6 +2,7 @@ package com.infinity.ai.platform.npc.state.impl;
 
 import com.infinity.ai.platform.npc.NPC;
 import com.infinity.ai.platform.npc.state.State;
+import com.infinity.common.consts.StateType;
 
 //定义具体的状态并使用状态机管理NPC行为。巡逻状态
 public class PatrolState implements State {
@@ -22,5 +23,10 @@ public class PatrolState implements State {
     @Override
     public void exit(NPC npc) {
         System.out.println(npc.getName() + " stops patrolling.");
+    }
+
+    @Override
+    public StateType getStateType() {
+        return null;
     }
 }

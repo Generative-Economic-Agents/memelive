@@ -2,6 +2,7 @@ package com.infinity.ai.platform.npc.state.impl;
 
 import com.infinity.ai.platform.npc.NPC;
 import com.infinity.ai.platform.npc.state.State;
+import com.infinity.common.consts.StateType;
 
 //返回到基本状态
 public class ReturnToBaseState implements State {
@@ -19,5 +20,10 @@ public class ReturnToBaseState implements State {
     @Override
     public void exit(NPC npc) {
         System.out.println(npc.getName() + " leaves the base.");
+    }
+
+    @Override
+    public StateType getStateType() {
+        return null;
     }
 }

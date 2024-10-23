@@ -128,7 +128,7 @@ public abstract class NPC implements EventListener {
 
         //行为树
         if (behaviorTree != null) {
-            behaviorTree.execute();
+            behaviorTree.execute(this);
         }
 
         //事件变更

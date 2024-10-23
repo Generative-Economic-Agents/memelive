@@ -16,7 +16,7 @@ public class Selector extends BehaviorNode {
     @Override
     public boolean execute(NPC npc) {
         for (BehaviorNode child : children) {
-            if (child.execute()) {
+            if (child.execute(npc)) {
                 return true;
             }
         }

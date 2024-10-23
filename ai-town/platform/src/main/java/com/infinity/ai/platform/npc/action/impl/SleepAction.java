@@ -10,8 +10,4 @@ public class SleepAction extends BehaviorNode {
         return false;
     }
 
-    @Override
-    public boolean execute(NPC npc) {
-        return false;
-    }
 }

@@ -1,6 +1,7 @@
 package com.infinity.ai.platform.npc.state;
 
 import com.infinity.ai.platform.npc.NPC;
+import com.infinity.common.consts.StateType;
 
 //状态接口
 public interface State {
@@ -9,4 +10,6 @@ public interface State {
     void execute(NPC npc);
 
     void exit(NPC npc);
+
+    StateType getStateType();
 }

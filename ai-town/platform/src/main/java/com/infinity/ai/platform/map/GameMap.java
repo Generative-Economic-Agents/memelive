@@ -15,7 +15,7 @@ public class GameMap {
     //地图数据
     public MapData mapData;
     // 地图表示，0表示可通行，1表示障碍物
-    //public final int[][] map;
+    public final int[][] map;
     //地图事件管理器
     public final MapEventManager eventManager;
     //A*寻址算法
@@ -24,8 +24,8 @@ public class GameMap {
     public GameMap() {
         //加载地图坐标数据
         String gameDataPath = Config.getInstance().getGameDataPath();
-        /*map = MapLoader.parseMap(gameDataPath + "/AiTownMap.tmx");
-        aStar = new AStar(map);*/
+        map = MapLoader.parseMap(gameDataPath + "/AiTownMap.tmx");
+        aStar = new AStar(map);
 
         try {
             //加载地图数据

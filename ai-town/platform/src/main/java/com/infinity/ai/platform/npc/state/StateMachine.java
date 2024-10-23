@@ -12,6 +12,9 @@ public class StateMachine {
     }
 
     public void changeState(State newState) {
+        if (currentState.getStateType() == newState.getStateType()) {
+            return;
+        }
         if (currentState != null) {
             currentState.exit(npc);
         }
