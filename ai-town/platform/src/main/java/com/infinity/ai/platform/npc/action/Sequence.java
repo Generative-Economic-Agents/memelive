@@ -1,5 +1,7 @@
 package com.infinity.ai.platform.npc.action;
 
+import com.infinity.ai.platform.npc.NPC;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,9 @@ public class Sequence extends BehaviorNode {
     }
 
     @Override
-    public boolean execute() {
+    public boolean execute(NPC npc) {
         for (BehaviorNode child : children) {
-            if (!child.execute()) {
+            if (!child.execute(npc)) {
                 return false;
             }
         }

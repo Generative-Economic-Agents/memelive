@@ -1,6 +1,7 @@
-package com.infinity.ai.platform.npc.state;
+package com.infinity.ai.platform.npc.state.impl;
 
 import com.infinity.ai.platform.npc.NPC;
+import com.infinity.ai.platform.npc.state.State;
 
 //返回到基本状态
 public class ReturnToBaseState implements State {

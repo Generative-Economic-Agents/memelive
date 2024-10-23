@@ -19,6 +19,7 @@ import com.infinity.ai.platform.npc.state.State;
 import com.infinity.ai.platform.npc.state.StateMachine;
 import com.infinity.common.base.thread.ThreadConst;
 import com.infinity.common.base.thread.Threads;
+import com.infinity.common.base.thread.timer.IntervalTimer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -95,12 +96,12 @@ public abstract class NPC implements EventListener {
         }
 
         //启动每帧服务
-        /*Threads.addListener(ThreadConst.TIMER_1S, "npc#run", new IntervalTimer(5000, 10000) {
+        Threads.addListener(ThreadConst.TIMER_1S, "npc#run", new IntervalTimer(5000, 10000) {
             @Override
             public boolean exec0(int interval) {
                 return run();
             }
-        });*/
+        });
     }
 
     //按固定帧数执行NPC业务

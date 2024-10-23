@@ -1,6 +1,7 @@
-package com.infinity.ai.platform.npc.state;
+package com.infinity.ai.platform.npc.state.impl;
 
 import com.infinity.ai.platform.npc.NPC;
+import com.infinity.ai.platform.npc.state.State;
 
 //定义具体的状态并使用状态机管理NPC行为。巡逻状态
 public class PatrolState implements State {

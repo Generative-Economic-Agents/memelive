@@ -57,9 +57,11 @@ public class QueryNpcDataTask extends BaseTask<QueryNpcDataRequest> {
         List<NpcCfg> npcCfgs = GameConfigManager.getInstance().getNpcCfgManager().allNpcCfg();
         npcCfgs.stream().forEach(cfg -> {
             if (CharacterType.Player.getCode() != cfg.getType()) {
-                NPC npc = npcManager.getOnlineNpcHolder(cfg.getId()).getNpc();
-                NpcDataListener npcDataListener = npc.getNpcDataListener();
-                npcs.add(npcDataListener.getNpcData());
+                if (npcManager.getOnlineNpcHolder(cfg.getId()) != null) {
+                    NPC npc = npcManager.getOnlineNpcHolder(cfg.getId()).getNpc();
+                    NpcDataListener npcDataListener = npc.getNpcDataListener();
+                    npcs.add(npcDataListener.getNpcData());
+                }
             }
         });
 
